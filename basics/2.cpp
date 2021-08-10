@@ -32,7 +32,7 @@ float pointerWinRatio(int *w, int *l){
 };
 
 template <size_t N>
-void arrayByPointer(std::string (&a)[N], int b[]){ 
+void arrayByReference(std::string (&a)[N], int b[]){ 
     for (int i = 0; i<sizeof(a)/sizeof(a[0]); i++){
         std::cout << i+1 << ". " << a[i] << " " << b[i*2] << "-" << b[i*2+1]<<std::endl;
     }
@@ -56,7 +56,7 @@ int main() {
         std::cin >> team;
     }
     stringByValue(lckTeams[team-1]);            
-    arrayByPointer(lckTeams,result);
+    arrayByReference(lckTeams,result);
 
     //BMI
     bool isOk;
