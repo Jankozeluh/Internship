@@ -30,18 +30,6 @@ class Person{
         struct datee birthDate;
 };
 
-class Note{
-    public:
-        std::string content;
-        void setNoteDate(int day, int month, int year) {noteDate.day = day;noteDate.month = month;noteDate.year = year;};
-        std::string getNoteDate() {
-            return std::to_string(noteDate.day) + "/" + std::to_string(noteDate.month) + "/" + std::to_string(noteDate.year);
-        };
-
-    private:
-        struct datee noteDate;
-};
-
 class Teacher: public Person{
     public:
         void setTitle(std::string tt){ title = tt;}
@@ -51,19 +39,27 @@ class Teacher: public Person{
         std::string title;
 };
 
-class Student: public Person, public Note{
+class Student: public Person{
     public:
-        void learning(){
-            std::cout << "I'm learning." << std::endl;
-            sleep(5);
-            std::cout << "I stopped learning." << std::endl;
-        }
+        void setNoteDate(int day, int month, int year) {noteDate.day = day;noteDate.month = month;noteDate.year = year;};
+        std::string getNoteDate() {
+            return std::to_string(noteDate.day) + "/" + std::to_string(noteDate.month) + "/" + std::to_string(noteDate.year);
+        };
+
+        void setContent(std::string ct) {content = ct;};
+        std::string getContent() {
+            return content;
+        };
+
+    private:
+        std::string content;
+        struct datee noteDate;
 };
 
-void teacherTable(std::string t, std::string f, std::string l, std::string b){
+void teacherTable(Teacher tr){
     std::cout << "\n--- TEACHER --- " << std::endl;
-    std::cout << t << " " << f << " " << l << std::endl;
-    std::cout << "Birth - " << b << "\n"<< std::endl;
+    std::cout << tr.getTitle() << " " << tr.getFirstName() << " " << tr.getLastName() << std::endl;
+    std::cout << "Birth - " << tr.getBirthDate() << "\n"<< std::endl;
 }
 
 int main() {
@@ -72,36 +68,36 @@ int main() {
     t1.setFirstName("Filip");
     t1.setLastName("Grznar");
     t1.setBirthDate(2,4,1986);
-    teacherTable(t1.getTitle(),t1.getFirstName(),t1.getLastName(),t1.getBirthDate());
+    teacherTable(t1);
 
     Student st1;
     st1.setFirstName("Varlos");
     st1.setLastName("Kremrola");
     st1.setBirthDate(1,1,2001);
     st1.setNoteDate(10,10,2010);
-    st1.content = "Podle doktorů se bohužel potvrdilo to, v co jsem tajně doufal, že se nepotvrdí. Urval jsem sakumprásk všechno, co šlo. Zranění je tak rozsáhlé, že všechno najednou operovat nešlo, je tam hodně práce a čeká mě série operací,";
-    std::cout << st1.getFirstName() << " " << st1.getLastName() << " - " << st1.getBirthDate() << "\n-Last Note-\n" << st1.content << "\nDate-" << st1.getNoteDate() << "\n" << std::endl;
+    st1.setContent("Podle doktorů se bohužel potvrdilo to, v co jsem tajně doufal, že se nepotvrdí. Urval jsem sakumprásk všechno, co šlo. Zranění je tak rozsáhlé, že všechno najednou operovat nešlo, je tam hodně práce a čeká mě série operací,");
+    std::cout << st1.getFirstName() << " " << st1.getLastName() << " - " << st1.getBirthDate() << "\n-Last Note-\n" << st1.getContent() << "\nDate-" << st1.getNoteDate() << "\n" << std::endl;
 
-    std::string t2T,t2F,t2L;
-    int t2D,t2M,t2Y;
+    std::string teacherTitle,teacherFirstName,teacherLastName;
+    int teacherBDay,teacherBMonth,teacherBYear;
 
     Teacher t2;
     std::cout << "Create your own teacher.\nTitle:" << std::endl;
-    std::cin >> t2T;
+    std::cin >> teacherTitle;
     std::cout << "Fist name:" << std::endl;
-    std::cin >> t2F;
+    std::cin >> teacherFirstName;
     std::cout << "Last name:" << std::endl;
-    std::cin >> t2L;
+    std::cin >> teacherLastName;
     std::cout << "Day of his/her birth:" << std::endl;
-    std::cin >> t2D;
+    std::cin >> teacherBDay;
     std::cout << "Month of his/her birth:" << std::endl;
-    std::cin >> t2M;
+    std::cin >> teacherBMonth;
     std::cout << "Year of his/her birth:" << std::endl;
-    std::cin >> t2Y;
-    t2.setTitle(t2T);
-    t2.setFirstName(t2F);
-    t2.setLastName(t2L);
-    t2.setBirthDate(t2D,t2M,t2Y);
-    teacherTable(t2.getTitle(),t2.getFirstName(),t2.getLastName(),t2.getBirthDate());
+    std::cin >> teacherBYear;
+    t2.setTitle(teacherTitle);
+    t2.setFirstName(teacherFirstName);
+    t2.setLastName(teacherLastName);
+    t2.setBirthDate(teacherBDay,teacherBMonth,teacherBYear);
+    teacherTable(t2);
     return 0;
 } 
