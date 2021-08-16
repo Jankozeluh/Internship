@@ -85,3 +85,5 @@ int main() {
 
     return 0;
 } 
+
+//https://stackoverflow.com/questions/1008019/c-singleton-design-pattern <- tu to je rozepsané, jsem z toho kontrolování proměnné v C++ dost zmatený
