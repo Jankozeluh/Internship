@@ -1,11 +1,11 @@
 CREATE TABLE people (
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	degree TEXT,
-	first_name TEXT NOT NULL,
-	last_name TEXT NOT NULL,
-	birth TEXT NOT NULL,
-	enrollment TEXT,
-	credits INTEGER
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    degree TEXT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    birth TEXT NOT NULL,
+    enrollment TEXT,
+    credits INTEGER
 );
 
 CREATE TABLE subject(
@@ -14,12 +14,11 @@ CREATE TABLE subject(
     credits INTEGER NOT NULL,
     semester INTEGER NOT NULL,
     garant INTEGER NOT NULL,
-    exercise TEXT, -- nevím jestli to bude fungovat, v sqlite nejsou booleany tak se to snažím nějak vyřešit
+    exercise TEXT,
     FOREIGN KEY(garant) REFERENCES people(id)
 );
---už jsem docela dlouho nedělal v sql, tak to musím trochu pozkoušet
+
 CREATE TABLE people_sub(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_p INTEGER NOT NULL,
     id_s INTEGER NOT NULL,
     FOREIGN KEY(id_s) REFERENCES subject(id),
