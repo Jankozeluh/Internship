@@ -1,63 +1,38 @@
 <?php
-require_once "models.php";
-//$studentOne = new Student();
-//$studentOne->setFirstName("Michal");
-//$studentOne->setLastName("Adámik");
-//$studentOne->setBirth(1989,1,3);
-//$studentOne->setEnrollDate(2000,8,4);
-//
-//$studentTwo = new Student();
-//$studentTwo->setFirstName("Jan");
-//$studentTwo->setLastName("Kozeluh");
-//$studentTwo->setBirth(2004,4,8);
-//$studentTwo->setEnrollDate(4,4,2022);
-//$studentTwo->setCredits(100);
-//
-//$studentThree = new Student();
-//$studentThree->setFirstName("Jakub");
-//$studentThree->setLastName("Malina");
-//$studentThree->setBirth(2003,3,3);
-//$studentThree->setEnrollDate(2021,3,3);
-//$studentThree->setCredits(80);
-//
-//$subjectOne = new Subject();
-//$subjectOne->setName("History");
-//$subjectOne->setCredits(4);
-//$subjectOne->setSemester(1);
-//$subjectOne->setGarant(30);
+require_once "creation.php";
+//Action::insertPerson($Billy);
+//Action::insertPerson($Karel);
+//Action::insertPerson($Holly);
+//Action::insertPerson($Bjergsen);
+//Action::insertPerson($Faker);
+//Action::insertPerson($Mithy);
+//Action::insertPerson($Albert);
+//Action::insertPerson($Doublelift);
+//Action::insertPerson($Freeze);
+//Action::insertPerson($Paul);
 
-//$teacherOne = new Teacher();
-//$teacherOne->setDegree("Mgr.");
-//$teacherOne->setFirstName("Jakub");
-//$teacherOne->setLastName("Hutečka");
-//$teacherOne->setBirth(2003,6,8);
-//setBirth(yyyy,mm,dd);
-//setEnrollDate(yyyy,mm,dd);
+//Action::insertSubject($Math);
+//Action::insertSubject($History);
+//Action::insertSubject($Geography);
+//Action::insertSubject($Art);
 
+//Action::insertSubjectToPerson($Paul,'Math',40,2);
+//Action::insertSubjectToPerson($Faker,'Art');
+//Action::insertSubjectToPerson($Faker,'Math');
+//Action::insertSubjectToPerson($Freeze,'History');
+//Action::insertSubjectToPerson($Bjergsen,'Math');
+//Action::insertSubjectToPerson($Holly,'History',20,1);
 
+//Action::deleteSubject('History');
+//Action::endSubjectProperly('Math');
 
-//echo $studentOne->getEnrollDate();
-//echo $teacherOne->getDegree();
-//$studentOne->setCredits(180);
-//$studentOne->leave('Math');
-//$studentOne->getAllStudents();
-//Subject::getAllSubjectsFromDatabase();
-Action::getSubjects();
-//Action::getStudents();
-Action::getTeachers();
+//Action::deletePerson($Doublelift);
+//Action::deletePerson($Karel);
 
-Action::getStudentsAZByLastName();
+//Action::leaveSubject($Faker,'Art');
+//Action::leave($Faker);
+//Action::leave($Freeze);
 
-//Action::leave($studentTwo);
-//Action::insertSubjectToPerson($studentThree,'History');
-//Action::leaveSubject($studentThree,'Math');
-//Action::insertPerson($studentTwo);
-//Action::deletePerson($studentOne);
-//Subject::insertSubjectToDatabase($subjectOne);
-//Student::insertStudentToDB($studentTwo);
-//$studentOne->getConcreteStudent('Jan','Kozeluh');
-//Student::deleteStudentFromDB($studentTwo);
-//Action::insertSubject($subjectOne);
 session_destroy();
 ?>
 <!DOCTYPE html>
@@ -73,8 +48,3 @@ session_destroy();
 
 </body>
 </html>
-
-
-
-
-
