@@ -61,12 +61,12 @@ class Action
             if (($obj instanceof \Student) && $obj->getCredits() !== null && $obj->getEnrollDate() !== "//") {
                 $stmt = $_SESSION['db']->prepare("INSERT INTO people(first_name,last_name,birth,enrollment,credits) VALUES (?,?,?,?,?);");
                 self::studentBind($stmt, $obj);
-                echo("[STUDENT WAS SET]");
+                echo("[STUDENT ".$obj->getFirstName()." WAS SET]");
             } elseif ($obj instanceof \Teacher && $obj->getDegree() !== null) {
-                echo($obj->getDegree() . " " . $obj->getFirstName() . " " . $obj->getLastName() . " " . $obj->getBirth());
+                //echo($obj->getDegree() . " " . $obj->getFirstName() . " " . $obj->getLastName() . " " . $obj->getBirth());
                 $stmt1 = $_SESSION['db']->prepare("INSERT INTO people(degree,first_name,last_name,birth) VALUES (?,?,?,?);");
                 self::teacherBind($stmt1, $obj);
-                echo("[TEACHER WAS SET]");
+                echo("[TEACHER ".$obj->getFirstName()." WAS SET]");
             } else {
                 echo("!Instance of object has been rejected, because you probably dont set right/all parameters!");
             }
@@ -77,21 +77,21 @@ class Action
     public static function insertSubject(object $obj): void
     {
         if ($obj instanceof \Subject) {
-            $stmt = $_SESSION['db']->prepare("INSERT INTO subject(name,credits,semester,garant) VALUES (?,?,?,?);");
-            if ($obj->getName() !== null && $obj->getCredits() !== null && $obj->getSemester() !== null && $obj->getGarant() !== null) {
+            $stmt = $_SESSION['db']->prepare("INSERT INTO subject(name,credits,semester,garant,pc) VALUES (?,?,?,?,?);");
+            if ($obj->getName() !== null && $obj->getCredits() !== null && $obj->getSemester() !== null && $obj->getGarant() !== null && $obj->getPc() !== null) {
                 $stmt->bindParam(1, $obj->getName());
                 $stmt->bindParam(2, $obj->getCredits());
                 $stmt->bindParam(3, $obj->getSemester());
+                $stmt->bindParam(5, $obj->getPc());
                 $stmt1 = $_SESSION['db']->query("SELECT id FROM people WHERE degree IS NOT NULL;");
                 while ($row = $stmt1->fetchArray()) {
                     if ($obj->getGarant() === $row['id']) {
                         $stmt->bindParam(4, $obj->getGarant());
                         $stmt->execute();
-                        echo "[NEW SUBJECT SET]";
+                        echo "[NEW SUBJECT ".$obj->getName()." SET]";
                         break;
                     }
                 }
-                echo($obj->getName() . " " . $obj->getCredits() . " " . $obj->getSemester() . " " . $obj->getGarant());
             } else {
                 echo "!Something is missing, you cannot insert this subject into a database.!";
             }
@@ -129,25 +129,25 @@ class Action
                 //echo ($obj->getFirstName().$obj->getLastName().$obj->getBirth()." ".$obj->getEnrollDate()." ".$obj->getCredits());
                 $stmt = $_SESSION['db']->prepare("DELETE FROM people WHERE first_name = ? AND last_name = ? AND birth = ? AND enrollment = ? AND credits = ?;");
                 self::studentBind($stmt, $obj);
-                echo("[STUDENT WAS DELETED]");
+                echo("[STUDENT ".$obj->getFirstName()." WAS DELETED]");
             } elseif ($obj instanceof \Teacher && $obj->getDegree() !== null) {
                 $stmt1 = $_SESSION['db']->prepare("DELETE FROM people WHERE degree = ? AND first_name = ? AND last_name = ? AND birth = ?;");
                 self::teacherBind($stmt1, $obj);
-                echo("[TEACHER WAS DELETED]");
+                echo("[TEACHER ".$obj->getFirstName()." WAS DELETED]");
             } else {
                 echo("!Person cannot be deleted, it has been rejected, you probably dont set right/all parameters!");
             }
         } else {
-            echo("!First/Last name or birthday error, value cannot be set as delete paramater for neither Student or Teacher.!");
+            echo("!First/Last name or birthday error, value cannot be set as delete parameter for neither Student or Teacher.!");
         }
     }
     public static function deleteSubject($subject): void
     {
         if($subject !== null) {
-            echo $subject;
             $stmt = $_SESSION['db']->prepare("DELETE FROM subject WHERE name = ?;");
             $stmt->bindParam(1, $subject);
-            echo("[SUBJECT WAS DELETED]");
+            $stmt->execute();
+            echo("[" . $subject . " WAS DELETED]");
         }else{echo"!Set a proper subject name as a parameter!";}
     }
 
@@ -215,7 +215,6 @@ class Action
         self::getStudentsBase($query);
     }
 
-
     public static function leaveSubject(object $obj, $subject)
     {
         if ($obj instanceof \Student) {
@@ -224,15 +223,15 @@ class Action
                 $row = self::getRow($obj, $stmt);
                 $stmt2 = $_SESSION['db']->query("SELECT * FROM subject;");
                 $sett = false;
-                while ($row = $stmt2->fetchArray()) {
-                    if ($subject === $row['name']) {
-                        $stmt->bindParam(2, $row['id']);
+                while ($row1 = $stmt2->fetchArray()) {
+                    if ($subject === $row1['name']) {
+                        $stmt->bindParam(2, $row1['id']);
                         $sett = true;
                         break;
                     }
                 }
                 if ($sett === true) {
-                    echo "[STUDENT LEFT THE SUBJECT]";
+                    echo "[STUDENT ".$obj->getFirstName()." LEFT THE SUBJECT ".$subject."]";
                     $stmt->execute();
                 } else {
                     echo "!You cannot left students subject like this!";
@@ -248,14 +247,34 @@ class Action
             $stmt = $_SESSION['db']->prepare("DELETE FROM people WHERE first_name = ? AND last_name = ? AND birth = ? AND enrollment = ? AND credits = ?;");
             if ($obj->getCredits() >= 80) {
                 self::studentBind($stmt, $obj);
-                echo("[STUDENT ENDED STUDIES]");
+                echo("[STUDENT ".$obj->getFirstName()." ENDED STUDIES]");
+            }
+            else{
+                echo("!You cannot leave school when your credits are below 80!");
             }
         }else {
-            echo "!Something is missing, student needs all parameters set to exact value so it can end studies properly!";
+            echo "!Something is missing, student needs all parameters set to exact value so it can end studies properly you also cannot leave as a Teacher!";
         }
 
     }
 
+    public static function endSubjectProperly($subject){
+        if($subject !== null) {
+            $query1 = $_SESSION["db"]->prepare('SELECT s.name, people.id, s.credits FROM people join people_sub ps on people.id = ps.id_p join subject s on s.id = ps.id_s WHERE s.name=? AND degree IS NULL;');
+            $query1->bindValue(1, $subject);
+            $res = $query1->execute();
+            $stmt = $_SESSION['db']->prepare("UPDATE people SET credits = credits+? WHERE degree IS NULL AND people.id=?;");
+            while ($row1 = $res->fetchArray()) {
+                $stmt->bindValue(1, $row1['credits']);
+                $stmt->bindValue(2, $row1['id']);
+                $stmt->execute();
+            }
+            $stmt1 = $_SESSION['db']->prepare("DELETE FROM subject WHERE name = ?;");
+            $stmt1->bindParam(1, $subject);
+            $stmt1->execute();
+            echo("[SUBJECT ".$subject." WAS PROPERLY ENDED]");
+        }else{echo"!Set a proper subject name as a parameter!";}
+    }
 
     /**
      * @param Student $obj
@@ -266,7 +285,7 @@ class Action
     {
         $stmt1 = $_SESSION['db']->query("SELECT * FROM people WHERE degree IS NULL;");
         while ($row = $stmt1->fetchArray()) {
-            if (($obj->getFirstName() === $row['first_name']) && ($obj->getLastName() === $row['last_name']) && ($obj->getBirth() === $row['birth']) && ($obj->getEnrollDate() === $row['enrollment']) && ($obj->getCredits() === $row['credits'])) {
+            if ($obj->getFirstName() === $row['first_name'] && $obj->getLastName() === $row['last_name'] && $obj->getBirth() === $row['birth'] && $obj->getEnrollDate() === $row['enrollment'] && $obj->getCredits() === $row['credits']) {
                 $stmt->bindParam(1, $row['id']);
                 break;
             }
@@ -293,7 +312,7 @@ class Action
             if ($subject === $row['name']) {
                 $stmt->bindParam(2, $row['id']);
                 $stmt->execute();
-                echo "[SUBJECT WAS INSERTED TO A PROPER PERSON YOU SPECIFIED]";
+                echo "[SUBJECT ".$subject." WAS INSERTED TO A PROPER PERSON YOU SPECIFIED]";
                 break;
             }
         }
