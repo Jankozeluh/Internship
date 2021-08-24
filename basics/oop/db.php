@@ -154,7 +154,7 @@ class Action
     public static function getSubjects(): void
     {
         $query = $_SESSION["db"]->query('SELECT subject.id, subject.name, subject.credits, subject.semester, subject.garant, subject.pc,p.degree, p.first_name, p.last_name from subject join people p on p.id = subject.garant;');
-        echo "<table style='border: 1px solid black;text-align: center;'><h3>SUBJECTS</h3>";
+        echo "<table style='border: 1px solid black;text-align: center;' class='table table-hover table-sm'><h3>SUBJECTS</h3>";
         print ' <thead><tr><th>ID</th><th>Subject name</th><th>Credits</th><th>Semester</th><th>Garant</th><th>Teachers</th><th>Own pc for exercises</th></tr></thead><tbody>';
         while ($row = $query->fetchArray()) {
             print '<tr>';
@@ -175,7 +175,7 @@ class Action
                 echo '</td><td>NO</td></tr>';
             }
         }
-        echo "</tbody></table'>";
+        echo "</tbody></table>";
     }
     public static function getStudents(): void
     {
@@ -185,7 +185,7 @@ class Action
     public static function getTeachers(): void
     {
         $query = $_SESSION["db"]->query('SELECT * FROM people WHERE degree IS NOT NULL;');
-        echo "<table style='border: 1px solid black;text-align: center;'><h3>TEACHERS</h3>";
+        echo "<table style='border: 1px solid black;text-align: center;'class='table table-hover table-sm'><h3>TEACHERS</h3>";
         echo "<th>ID</th><th>Degree</th><th>First name</th><th>Last name</th><th>Birth</th><th>Subjects(n.of lectures/exercises)</th>";
         while ($row = $query->fetchArray()) {
             echo '<tr><td>' . $row['id'] . '</td>';
@@ -200,7 +200,7 @@ class Action
             }
             echo '</td></tr>';
         }
-        echo "</table'>";
+        echo "</table>";
     }
 
     // DALŠÍ FUNKCE(DOSLOVA ZMĚNENÍM JEDNOHO ŘÁDKU)
@@ -347,7 +347,7 @@ class Action
      */
     public static function getStudentsBase($query): void
     {
-        echo "<table style='border: 1px solid black;text-align: center;'><h3>STUDENTS</h3>";
+        echo "<table style='border: 1px solid black;text-align: center;'class='table table-hover table-sm'><h3>STUDENTS</h3>";
         echo "<th>ID</th><th>First name</th><th>Last name</th><th>Birth</th><th>Enrollment</th><th>Credits(finish studies?)</th><th>Subjects</th>";
         while ($row = $query->fetchArray()) {
             echo '<tr>';
@@ -367,6 +367,24 @@ class Action
             }
             echo '</td></tr>';
         }
-        echo "</table'>";
+        echo "</table>";
     }
-}
+
+    public static function insertSubjectToPerson2($id, $subject, $lecture = null, $exercise = null): void
+    {
+        if ($id !== null && $subject !== null) {
+                if ($lecture !== null && $exercise !== null) {
+                    $stmt = $_SESSION['db']->prepare("INSERT INTO people_sub(id_p,id_s,lecture,exercise) VALUES(?,?,?,?);");
+                    $stmt->bindParam(1, $id);
+                    $stmt->bindParam(3, $lecture);
+                    $stmt->bindParam(4, $exercise);
+                    self::stmt2($subject, $stmt);
+                }
+                elseif ($lecture === null && $exercise === null) {
+                    $stmt = $_SESSION['db']->prepare("INSERT INTO people_sub(id_p,id_s) VALUES(?,?);");
+                    $stmt->bindParam(1, $id);
+                    self::stmt2($subject, $stmt);
+                }
+            }
+        }
+    }
