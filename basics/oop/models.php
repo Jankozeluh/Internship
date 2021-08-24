@@ -1,20 +1,22 @@
 <?php
 require_once 'db.php';
 class Person {
-    private $firstName,$lastName;
-    private array $birth = array();
+    private $firstName,$lastName,$birth;
+    //private array $birth = array();
 
-    public function __construct($firstName,$lastName,array $birth){
+    public function __construct($firstName,$lastName,$birth){
         $this->firstName=$firstName;
         $this->lastName=$lastName;
-        $this->birth["day"] = $birth[2];
-        $this->birth["month"] = $birth[1];
-        $this->birth["year"] = $birth[0];
+        $this->birth=$birth;
+//        $this->birth["day"] = $birth[2];
+//        $this->birth["month"] = $birth[1];
+//        $this->birth["year"] = $birth[0];
     }
 
     public function getFirstName(){ return $this->firstName;}
     public function getLastName(){ return $this->lastName;}
-    public function getBirth(): string{ return ($this->birth["year"]."/".$this->birth["month"]."/".$this->birth["day"]);}
+    public function getBirth(): string{ return $this->birth;}
+    //public function getBirth(): string{ return ($this->birth["year"]."/".$this->birth["month"]."/".$this->birth["day"]);}
     /*public function setFirstName($firstName): void{$this->firstName = $firstName;}
     public function setLastName($lastName): void{ $this->lastName = $lastName;}
     public function setBirth($year,$month,$day): void{
@@ -27,18 +29,22 @@ class Person {
 
 class Student extends Person{
     private int $credits;
-    private array $enrollDate = array();
+    private string $enrollDate;
+    //private array $enrollDate = array();
 
-    public function __construct($firstName, $lastName, array $birth,array $enrollDate, $credits) {
+    public function __construct($firstName, $lastName, $birth, $enrollDate, $credits) {
         parent::__construct($firstName,$lastName,$birth);
-        $this->enrollDate["day"] = $enrollDate[2];
-        $this->enrollDate["month"] = $enrollDate[1];
-        $this->enrollDate["year"] = $enrollDate[0];
+//        $this->enrollDate["day"] = $enrollDate[2];
+//        $this->enrollDate["month"] = $enrollDate[1];
+//        $this->enrollDate["year"] = $enrollDate[0];
+        $this->enrollDate=$enrollDate;
         $this->credits=$credits;
     }
 
-    public function getEnrollDate(): string{ return $this->enrollDate["year"]."/".$this->enrollDate["month"]."/".$this->enrollDate["day"];}
+    //public function getEnrollDate(): string{ return $this->enrollDate["year"]."/".$this->enrollDate["month"]."/".$this->enrollDate["day"];}
     public function getCredits(): int{ return $this->credits;}
+    public function getEnrollDate(): string{ return $this->enrollDate;}
+
     /*public function setEnrollDate($year,$day,$month): void{
         $this->enrollDate["day"] = $day;
         $this->enrollDate["month"] = $month;
@@ -51,7 +57,7 @@ class Student extends Person{
 class Teacher extends Person{
     private string $degree;
 
-    public function __construct($degree,$firstName, $lastName, array $birth) {
+    public function __construct($degree,$firstName, $lastName, $birth) {
         parent::__construct($firstName,$lastName,$birth);
         $this->degree=$degree;
     }
