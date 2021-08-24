@@ -1,0 +1,117 @@
+<?php
+class old_func{
+    /*public static function insertSubjectToPerson(object $obj, $subject, $lecture = null, $exercise = null): void
+    {
+        if ($obj->getFirstName() !== null && $obj->getLastName() !== null && $obj->getBirth() !== "//") {
+            if ($obj instanceof \Teacher && $obj->getDegree() !== null) {
+                if ($lecture !== null && $exercise !== null) {
+                    $stmt = $_SESSION['db']->prepare("INSERT INTO people_sub(id_p,id_s,lecture,exercise) VALUES(?,?,?,?);");
+                    $stmt1 = $_SESSION['db']->query("SELECT * FROM people WHERE degree IS NOT NULL;");
+                    while ($row = $stmt1->fetchArray()) {
+                        if (($obj->getDegree() === $row['degree']) && ($obj->getFirstName() === $row['first_name']) && ($obj->getLastName() === $row['last_name']) && ($obj->getBirth() === $row['birth'])) {
+                            $stmt->bindParam(1, $row['id']);
+                            break;
+                        }
+                    }
+                    $stmt->bindParam(3, $lecture);
+                    $stmt->bindParam(4, $exercise);
+                    self::stmt2($subject, $stmt);
+                }
+            } elseif (($obj instanceof \Student) && $obj->getCredits() !== null && $obj->getEnrollDate() !== "//") {
+                $stmt = $_SESSION['db']->prepare("INSERT INTO people_sub(id_p,id_s) VALUES(?,?);");
+                $row = self::getRow($obj, $stmt);
+                self::stmt2($subject, $stmt);
+            }
+        }
+    }
+
+    public static function deletePerson(object $obj): void
+    {
+        if ($obj->getFirstName() !== null && $obj->getLastName() !== null && $obj->getBirth() !== "//") {
+            if (($obj instanceof \Student) && $obj->getCredits() !== null && $obj->getEnrollDate() !== "//") {
+                $stmt = $_SESSION['db']->prepare("DELETE FROM people WHERE first_name = ? AND last_name = ? AND birth = ? AND enrollment = ? AND credits = ?;");
+                self::studentBind($stmt, $obj);
+                echo("[STUDENT " . $obj->getFirstName() . " WAS DELETED]");
+            } elseif ($obj instanceof \Teacher && $obj->getDegree() !== null) {
+                $stmt1 = $_SESSION['db']->prepare("DELETE FROM people WHERE degree = ? AND first_name = ? AND last_name = ? AND birth = ?;");
+                self::teacherBind($stmt1, $obj);
+                echo("[TEACHER " . $obj->getFirstName() . " WAS DELETED]");
+            } else {
+                echo("!Person cannot be deleted, it has been rejected, you probably dont set right/all parameters!");
+            }
+        } else {
+            echo("!First/Last name or birthday error, value cannot be set as delete parameter for neither Student or Teacher.!");
+        }
+    }
+    /*
+    public static function deleteSubject($subject): void
+    {
+        if ($subject !== null) {
+            $stmt = $_SESSION['db']->prepare("DELETE FROM subject WHERE name = ?;");
+            $stmt->bindParam(1, $subject);
+            $stmt->execute();
+            echo("[" . $subject . " WAS DELETED]");
+        } else {
+            echo "!Set a proper subject name as a parameter!";
+        }
+    }
+
+
+public static function leaveSubject(object $obj, $subject)
+{
+    if ($obj instanceof \Student) {
+        $stmt = $_SESSION['db']->prepare("DELETE FROM people_sub WHERE id_p=? AND id_s=? AND lecture IS NULL AND exercise IS NULL ;");
+        if ($obj->getFirstName() !== null && $subject !== null) {
+            $row = self::getRow($obj, $stmt);
+            $stmt2 = $_SESSION['db']->query("SELECT * FROM subject;");
+            $sett = false;
+            while ($row1 = $stmt2->fetchArray()) {
+                if ($subject === $row1['name']) {
+                    $stmt->bindParam(2, $row1['id']);
+                    $sett = true;
+                    break;
+                }
+            }
+            if ($sett === true) {
+                echo "[STUDENT " . $obj->getFirstName() . " LEFT THE SUBJECT " . $subject . "]";
+                $stmt->execute();
+            } else {
+                echo "!You cannot left students subject like this!";
+            }
+        } else {
+            echo "!Something is missing, you cannot delete this connection between student and subject from a database like this!";
+        }
+    }
+}
+
+    public static function leave(object $obj)
+    {
+        if ($obj->getFirstName() !== null && $obj->getLastName() !== null && $obj->getBirth() !== "//" && ($obj instanceof \Student) && $obj->getCredits() !== null && $obj->getEnrollDate() !== "//") {
+            $stmt = $_SESSION['db']->prepare("DELETE FROM people WHERE first_name = ? AND last_name = ? AND birth = ? AND enrollment = ? AND credits = ?;");
+            if ($obj->getCredits() >= 80) {
+                self::studentBind($stmt, $obj);
+                echo("[STUDENT " . $obj->getFirstName() . " ENDED STUDIES]");
+            } else {
+                echo("!You cannot leave school when your credits are below 80!");
+            }
+        } else {
+            echo "!Something is missing, student needs all parameters set to exact value so it can end studies properly you also cannot leave as a Teacher!";
+        }
+
+    }
+
+    public static function endSubjectProperly($subject)
+    {
+        if ($subject !== null) {
+            $query1 = $_SESSION["db"]->prepare('SELECT s.name, people.id, s.credits FROM people join people_sub ps on people.id = ps.id_p join subject s on s.id = ps.id_s WHERE s.name=? AND degree IS NULL;');
+            self::extracted($query1, $subject);
+            $stmt1 = $_SESSION['db']->prepare("DELETE FROM subject WHERE name = ?;");
+            $stmt1->bindParam(1, $subject);
+            $stmt1->execute();
+            echo("[SUBJECT " . $subject . " WAS PROPERLY ENDED]");
+        } else {
+            echo "!Set a proper subject name as a parameter!";
+        }
+    }
+    */
+}
