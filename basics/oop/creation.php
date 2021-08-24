@@ -24,26 +24,33 @@ class TeachersFactory{
     public static function createBilly(): Teacher{return new Teacher('BAS.','Billy', 'Farmer',array(1982,1,30));}
 }
 
-$StudentsFactory = new StudentsFactory();
-$TeachersFactory = new TeachersFactory();
-$SubjectsFactory = new SubjectsFactory();
+//$StudentsFactory = new StudentsFactory();
+//$TeachersFactory = new TeachersFactory();
+//$SubjectsFactory = new SubjectsFactory();
+//
+//$Bjergsen = $StudentsFactory::createBjergsen();
+//$Faker = $StudentsFactory::createFaker();
+//$Mithy = $StudentsFactory::createMithy();
+//$Doublelift = $StudentsFactory::createDoublelift();
+//$Freeze = $StudentsFactory::createFreeze();
+//$Holly = $TeachersFactory::createHolly();
+//$Albert = $TeachersFactory::createAlbert();
+//$Billy = $TeachersFactory::createBilly();
+//$Karel = $TeachersFactory::createKarel();
+//$Paul = $TeachersFactory::createPaul();
+//
+//$Math = $SubjectsFactory::createMath();
+//$History = $SubjectsFactory::createHistory();
+//$Geography = $SubjectsFactory::createGeography();
+//$Art = $SubjectsFactory::createArt();
 
-$Bjergsen = $StudentsFactory::createBjergsen();
-$Faker = $StudentsFactory::createFaker();
-$Mithy = $StudentsFactory::createMithy();
-$Doublelift = $StudentsFactory::createDoublelift();
-$Freeze = $StudentsFactory::createFreeze();
-$Holly = $TeachersFactory::createHolly();
-$Albert = $TeachersFactory::createAlbert();
-$Billy = $TeachersFactory::createBilly();
-$Karel = $TeachersFactory::createKarel();
-$Paul = $TeachersFactory::createPaul();
+$Lukas = new Teacher('BA.','Lukas','Topol','2021/08/19');
 
-$Math = $SubjectsFactory::createMath();
-$History = $SubjectsFactory::createHistory();
-$Geography = $SubjectsFactory::createGeography();
-$Art = $SubjectsFactory::createArt();
-
-Action::getStudents();
-Action::getTeachers();
-Action::getSubjects();
+echo '<div class="container px-4 py-3"><div class="row"><div class="col-sm">';
+    Action::getStudents();
+echo '</div><div class="col-sm">';
+    Action::getTeachers();
+echo '</div><div class="col-sm">';
+    Action::getSubjects();
+echo '</div></div></div>';
+//Action::insertSubjectToPerson($Lukas,'Art',35,5);
