@@ -1,38 +1,5 @@
 <?php
 require_once "creation.php";
-//Action::insertPerson($Billy);
-//Action::insertPerson($Karel);
-//Action::insertPerson($Holly);
-//Action::insertPerson($Bjergsen);
-//Action::insertPerson($Faker);
-//Action::insertPerson($Mithy);
-//Action::insertPerson($Albert);
-//Action::insertPerson($Doublelift);
-//Action::insertPerson($Freeze);
-//Action::insertPerson($Paul);
-
-//Action::insertSubject($Math);
-//Action::insertSubject($History);
-//Action::insertSubject($Geography);
-//Action::insertSubject($Art);
-
-//Action::insertSubjectToPerson($Paul,'Math',40,2);
-//Action::insertSubjectToPerson($Faker,'Art');
-//Action::insertSubjectToPerson($Faker,'Math');
-//Action::insertSubjectToPerson($Freeze,'History');
-//Action::insertSubjectToPerson($Bjergsen,'Math');
-//Action::insertSubjectToPerson($Holly,'History',20,1);
-
-//Action::deleteSubject('History');
-//Action::endSubjectProperly('Math');
-
-//Action::deletePerson($Doublelift);
-//Action::deletePerson($Karel);
-
-//Action::leaveSubject($Faker,'Art');
-//Action::leave($Faker);
-//Action::leave($Freeze);
-
 session_destroy();
 ?>
 <!DOCTYPE html>
@@ -48,34 +15,39 @@ session_destroy();
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <form action="index.php" method="post" class="px-4 py-3">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
                     <h4 style="text-align: center">insert student</h4>
-                    First name:<input type="text" name="st_first_name" required><br />
-                    Last name: <input type="text" name="st_last_name" required><br />
-                    Birth:     <input type="date" name="st_birth" required><br />
+                    <input type="text" name="st_first_name" placeholder="First name" required><br />
+                    <input type="text" name="st_last_name" placeholder="Last name" required><br />
+                    Birth:<input type="date" name="st_birth" required><br />
                     Enrollment:<input type="date" name="st_enrollment" required><br />
-                    Credits:   <input type="number" name="st_credits" required><br />
+                    <input type="number" name="st_credits" placeholder="Credits" required><br />
                     <input type="submit" name="student" value="Submit new student" />
                 </form>
             </div>
             <div class="col-sm">
-                <form action="index.php" method="post" class="px-4 py-3">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
                     <h4 style="text-align: center">insert subject</h4>
-                    Name:    <input type="text" name="subject_name" required><br />
-                    Credits: <input type="number" name="subject_credits" required><br />
-                    Semester:<input type="number" name="subject_semester" required><br />
-                    Garant:  <input type="number" name="subject_garant" required><br />
-                    Pc:      <input type="number" name="subject_pc" required><br />
+                    <input type="text" name="subject_name" placeholder="Name" required><br />
+                    <input type="number" name="subject_credits" placeholder="Credits" required><br />
+                    <input type="number" name="subject_semester" placeholder="Semester" required><br />
+                    Garant: <?php Action::getTeachersSelector('subject_garant'); ?>
+                    <br>
+                    PC: <select name="subject_pc" required>
+                        <option value="1">YES</option>
+                        <option value="2">NO</option>
+                    </select>
+                    <br>
                     <input type="submit" name="subject" value="Submit new subject" />
                 </form>
             </div>
             <div class="col-sm">
-                <form action="index.php" method="post" class="px-4 py-3">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
                     <h4 style="text-align: center">insert teacher</h4>
-                    Degree:    <input type="text" name="tr_degree" required><br />
-                    First name:<input type="text" name="tr_first_name" required><br />
-                    Last name: <input type="text" name="tr_last_name" required><br />
-                    Birth:     <input type="date" name="tr_birth" required><br />
+                    <input type="text" name="tr_degree" placeholder="Degree" required><br />
+                    <input type="text" name="tr_first_name" placeholder="First name" required><br />
+                    <input type="text" name="tr_last_name" placeholder="Last name" required><br />
+                    Birth: <input type="date" name="tr_birth"  required><br />
                     <input type="submit" name="teacher" value="Submit new teacher" />
                 </form>
             </div>
@@ -85,23 +57,56 @@ session_destroy();
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <form action="index.php" method="post" class="px-4 py-3">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
                     <h4 style="text-align: center">insert subject to?</h4>
-                    ID of a Person:<input type="number" name="i_id" required><br />
-                    Subject name:  <input type="text" name="i_subject_name" required><br />
-                    N.of lectures:<input type="number" name="i_lecture"><br />
-                    N.of exercises:<input type="number" name="i_exercise"><br />
+                    <?php Action::getPeopleSelector('i_id'); Action::getSubjectsSelector('i_subject_name'); ?>
+                    <input type="number" placeholder="N.of lectures" name="i_lecture"><br />
+                    <input type="number" placeholder="N.of exercises" name="i_exercise"><br />
                     <input type="submit" name="i_subject" value="Submit subject to a person" />
                 </form>
             </div>
             <div class="col-sm">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
+                    <h4 style="text-align: center">students leave</h4>
+                    <?php Action::getStudentsSelector('stt'); ?>
+                    <input type="submit" name="s_leave" value="Submit leave" />
+                </form>
             </div>
             <div class="col-sm">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
+                    <h4 style="text-align: center">leave subject</h4>
+                    <?php Action::getStudentsSelector('leave');Action::getSubjectsSelector('leave_s'); ?>
+                    <input type="submit" name="s_sub_leave" value="Submit leave subject" />
+                </form>
             </div>
         </div>
     </div>
 
-
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
+                    <h4 style="text-align: center">delete subject</h4>
+                    <?php Action::getSubjectsSelector('deleteSub'); ?>
+                    <input type="submit" name="d_subject" value="DELETE SUBJECT" />
+                </form>
+            </div>
+            <div class="col-sm">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
+                    <h4 style="text-align: center">delete person</h4>
+                    <?php Action::getPeopleSelector('deletePer'); ?>
+                    <input type="submit" name="d_person" value="DELETE PERSON" />
+                </form>
+            </div>
+            <div class="col-sm">
+                <form action="index.php" method="post" class="px-4 py-3" style="text-align: center">
+                    <h4 style="text-align: center">end subject</h4>
+                    <?php Action::getSubjectsSelector('deleteSub'); ?>
+                    <input type="submit" name="end_subject" value="END SUBJECT" />
+                </form>
+            </div>
+        </div>
+    </div>
 
 <?php
     if(isset($_POST['student'])) {
@@ -118,10 +123,23 @@ session_destroy();
         $_POST = array();
     }elseif(isset($_POST['i_subject'])) {
         if(!empty($_POST['i_lecture'] && $_POST['i_exercise'])){
-            Action::insertSubjectToPerson2($_POST['i_id'], $_POST['i_subject_name'], $_POST['i_lecture'], $_POST['i_exercise']);
-        }else{
-            Action::insertSubjectToPerson2($_POST['i_id'], $_POST['i_subject_name']);
-        }
+            Action::insertSubjectToPerson($_POST['i_id'], $_POST['i_subject_name'], $_POST['i_lecture'], $_POST['i_exercise']);
+        }else{Action::insertSubjectToPerson($_POST['i_id'], $_POST['i_subject_name']);}
+        $_POST = array();
+    }elseif(isset($_POST['s_leave'])) {
+        Action::leave((int)$_POST['stt']);
+        $_POST = array();
+    }elseif(isset($_POST['s_sub_leave'])) {
+        Action::leaveSubject((int)$_POST['leave'],(int)$_POST['leave_s']);
+        $_POST = array();
+    }elseif(isset($_POST['d_subject'])) {
+        Action::deleteSubject((int)$_POST['deleteSub']);
+        $_POST = array();
+    }elseif(isset($_POST['d_person'])) {
+        Action::deletePerson((int)$_POST['deletePer']);
+        $_POST = array();
+    }elseif(isset($_POST['end_subject'])) {
+        Action::endSubjectProperly((int)$_POST['deleteSub']);
         $_POST = array();
     }
 ?>
