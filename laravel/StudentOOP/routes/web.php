@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\StudentControllerOld;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers;
@@ -21,17 +20,19 @@ use Illuminate\Support\Facades\Route;
 
 //Route::get('/',[PrintController::class,'print']);
 
-//Route::get('/students/{student}', [StudentController::class, 'index']);
+//Route::get('/students/{students}', [StudentController::class, 'index']);
 //
-//Route::post('student',[StudentControllerOld::class,'findAction']);
-//Route::view("/student",'Student');
+//Route::post('students',[StudentControllerOld::class,'findAction']);
+//Route::view("/students",'Student');
 ////
-//Route::post('teacher',[TeacherController::class,'findAction']);
+//Route::post('teacher',[TeacherControllerOld::class,'findAction']);
 //Route::view("/teacher",'Teacher');
 ////
-//Route::post('subject',[SubjectController::class,'findAction']);
+//Route::post('subject',[SubjectControllerOld::class,'findAction']);
 //Route::view("/subject",'Subject');
 
 Route::resource('/students', StudentController::class);
+Route::resource('/teachers', TeacherController::class);
+Route::resource('/subjects', SubjectController::class);
 
 

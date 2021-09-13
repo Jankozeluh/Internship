@@ -10,7 +10,6 @@ class Teacher extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'teachers';
-    protected $primaryKey = 'id';
     protected $fillable = ['degree','firstName','lastName','birth'];
 
     public function subjects(){

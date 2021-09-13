@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-sm" style="text-align: center;padding-top: 2%">
                     <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                        <a href="{{ url('/student') }}"><h4>Students</h4></a>
+                        <a href="{{ url('/students') }}"><h4>Students</h4></a>
                         <thead>
                             <tr>
                                 <th scope="row">#</th>

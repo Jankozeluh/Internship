@@ -44,7 +44,7 @@ class StudentControllerOld extends Controller
         return view('/Student');
     }
     public function delete(Request $request){
-        DB::table('students')->delete((int)$request->input('student'));
+        DB::table('students')->delete((int)$request->input('students'));
         return view('/Student');
     }
     public function leave(Request $request){
@@ -54,7 +54,7 @@ class StudentControllerOld extends Controller
                     DB::table('students')->delete((int)$request->input('st_leave'));
                 }
                 else{
-                    echo "This student does not have at least 80 credits.";
+                    echo "This students does not have at least 80 credits.";
                 }
             }
         }
