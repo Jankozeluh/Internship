@@ -143,4 +143,12 @@ class StudentController extends Controller
         Student::find($student->id)->enrolledSubjects()->detach($request->subId);
         return redirect('/students');
     }
+
+    public function leave(Student $student){
+        if((Student::find($student->id)->credits)>80){
+            $student->delete();
+            return redirect('/students')->with('success','Student successfully left.');
+        }
+        return redirect('/students')->with('fail','Student cant left with credits smaller than 80.');
+    }
 }
