@@ -22,3 +22,12 @@ a:hover{
     border: none !important;
     font-size:0;
 }
+
+#lddButton{
+    background: transparent;
+    border: none !important;
+}
+
+#lddButton:hover{
+    text-decoration: line-through 2px;
+}

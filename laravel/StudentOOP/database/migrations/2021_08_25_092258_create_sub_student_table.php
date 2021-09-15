@@ -14,8 +14,8 @@ class CreateSubStudentTable extends Migration
     public function up()
     {
         Schema::create('sub_student', function (Blueprint $table) {
-            $table->foreignId('student_id',)->constrained();
-            $table->foreignId('subject_id')->constrained();
+            $table->foreignId('student_id',)->constrained()->onDelete('cascade');
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
         });
     }
 

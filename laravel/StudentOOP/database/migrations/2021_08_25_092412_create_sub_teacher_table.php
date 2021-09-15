@@ -14,8 +14,8 @@ class CreateSubTeacherTable extends Migration
     public function up()
     {
         Schema::create('sub_teacher', function (Blueprint $table) {
-            $table->foreignId('teacher_id',)->constrained();
-            $table->foreignId('subject_id')->constrained();
+            $table->foreignId('teacher_id',)->constrained()->onDelete('cascade');
+            $table->foreignId('subject_id')->constrained()->onDelete('cascade');
             $table->integer('lecture');
             $table->integer('exercise');
         });

@@ -33,8 +33,9 @@ use Illuminate\Support\Facades\Route;
 //Route::view("/subject",'Subject');
 
 Route::prefix('students')->group(function () {
-    Route::get('{student}/add/subject', [StudentController::class,'addSubject']);
-    Route::post('{student}/add/subject/submit', [StudentController::class,'subject']);
+    Route::post('{student}/delete/subject', [StudentController::class,'deleteSubject']);
+    Route::get('{student}/add/subject', [StudentController::class,'subject']);
+    Route::post('{student}/add/subject/submit', [StudentController::class,'addSubject']);
 });
 Route::resource('/students', StudentController::class);
 

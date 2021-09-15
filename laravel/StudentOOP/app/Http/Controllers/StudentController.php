@@ -114,7 +114,7 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function addSubject(Student $student){
+    public function subject(Student $student){
         $subjects = Subject::whereDoesntHave('students', function ($query) use ($student) {$query->where('student_id', $student->id);})->get();
         return view('students.add.subject')->with('student',Student::find($student->id))->with('subject', $subjects);
     }
@@ -126,8 +126,21 @@ class StudentController extends Controller
     * @param  \App\Models\Student  $student
     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
     */
-    public function subject(Request $request,Student $student){
-        DB::insert('insert into sub_student (student_id, subject_id) values (?, ?)', [$student->id, $request->subject]);
+    public function addSubject(Request $request,Student $student){
+        Student::find($student->id)->enrolledSubjects()->attach($request->subject);
+        return redirect('/students');
+    }
+
+    /**
+     * Delete a subject from a student.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function deleteSubject(Student $student, Request $request)
+    {
+        Student::find($student->id)->enrolledSubjects()->detach($request->subId);
         return redirect('/students');
     }
 }
