@@ -36,7 +36,6 @@ Route::prefix('students')->group(function () {
     Route::get('{student}/add/subject', [StudentController::class,'addSubject']);
     Route::post('{student}/add/subject/submit', [StudentController::class,'subject']);
 });
-
 Route::resource('/students', StudentController::class);
 
 Route::resource('/teachers', TeacherController::class);

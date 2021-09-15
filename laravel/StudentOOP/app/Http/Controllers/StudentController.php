@@ -104,7 +104,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        Student::find($student->id)->delete();
+        Student::find($student->id)->first()->delete();
         return redirect('/students');
     }
 
@@ -115,7 +115,8 @@ class StudentController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function addSubject(Student $student){
-        return view('students.addSubject')->with('student',Student::find($student->id))->with('subject', Subject::all());
+        $subjects = Subject::whereDoesntHave('students', function ($query) use ($student) {$query->where('student_id', $student->id);})->get();
+        return view('students.add.subject')->with('student',Student::find($student->id))->with('subject', $subjects);
     }
 
     /**

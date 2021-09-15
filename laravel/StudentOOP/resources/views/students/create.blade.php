@@ -4,7 +4,7 @@
     <div class="container" style="width: 50%">
         <div class="row">
             <div class="col-sm">
-                <form action="/student" method="POST" class="px-4 py-3" style="text-align: center">
+                <form action="/students" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
                     <h4 style="text-align: center">INSERT</h4>
                     <div class="input-group input-group-sm mb-3">
