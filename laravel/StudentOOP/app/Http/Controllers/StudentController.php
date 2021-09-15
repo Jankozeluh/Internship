@@ -6,6 +6,7 @@ use App\Http\Requests\InsertStudentRequest;
 use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -71,7 +72,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        return view('students.edit')->with('students',Student::find($student->id));
+        return view('students.edit')->with('student',Student::find($student->id));
     }
 
     /**
@@ -117,25 +118,15 @@ class StudentController extends Controller
         return view('students.addSubject')->with('student',Student::find($student->id))->with('subject', Subject::all());
     }
 
-    /*
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
-     *
-    public function subject(InsertSubjectToRequest $request, Student $student)
-    {
-        $request->validated();
-        Student::where('id',$student->id)->update([
-            'degree' => $request->input('degree', null),
-            'firstName' => $request->input('firstName'),
-            'lastName' => $request->input('lastName'),
-            'credits' => (int)$request->input('credits'),
-            'birth' => ((string)date("Y/m/d", strtotime($request->input('birth')))),
-            'enrollment' => ((string)date("Y/m/d", strtotime($request->input('enrollment')))),
-        ]);
+    /**
+    * Add a subject for student.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Student  $student
+    * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+    */
+    public function subject(Request $request,Student $student){
+        DB::insert('insert into sub_student (student_id, subject_id) values (?, ?)', [$student->id, $request->subject]);
         return redirect('/students');
     }
-    */
 }
