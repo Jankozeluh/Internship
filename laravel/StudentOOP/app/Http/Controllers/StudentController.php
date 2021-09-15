@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InsertStudentRequest;
 use App\Models\Student;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -105,4 +106,36 @@ class StudentController extends Controller
         Student::find($student->id)->delete();
         return redirect('/students');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function addSubject(Student $student){
+        return view('students.addSubject')->with('student',Student::find($student->id))->with('subject', Subject::all());
+    }
+
+    /*
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     *
+    public function subject(InsertSubjectToRequest $request, Student $student)
+    {
+        $request->validated();
+        Student::where('id',$student->id)->update([
+            'degree' => $request->input('degree', null),
+            'firstName' => $request->input('firstName'),
+            'lastName' => $request->input('lastName'),
+            'credits' => (int)$request->input('credits'),
+            'birth' => ((string)date("Y/m/d", strtotime($request->input('birth')))),
+            'enrollment' => ((string)date("Y/m/d", strtotime($request->input('enrollment')))),
+        ]);
+        return redirect('/students');
+    }
+    */
 }

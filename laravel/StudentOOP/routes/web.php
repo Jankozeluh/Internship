@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +32,14 @@ use Illuminate\Support\Facades\Route;
 //Route::post('subject',[SubjectControllerOld::class,'findAction']);
 //Route::view("/subject",'Subject');
 
+Route::prefix('students')->group(function () {
+    Route::get('{student}/addSubject', [StudentController::class,'addSubject']);
+
+});
+//Route::post('/students/{id}/addSubject', [StudentController::class,'subject']);
+
 Route::resource('/students', StudentController::class);
+
 Route::resource('/teachers', TeacherController::class);
 Route::resource('/subjects', SubjectController::class);
 
