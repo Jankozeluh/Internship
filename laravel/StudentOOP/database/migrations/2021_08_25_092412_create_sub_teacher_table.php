@@ -16,8 +16,6 @@ class CreateSubTeacherTable extends Migration
         Schema::create('sub_teacher', function (Blueprint $table) {
             $table->foreignId('teacher_id',)->constrained()->onDelete('cascade');
             $table->foreignId('subject_id')->constrained()->onDelete('cascade');
-            $table->integer('lecture');
-            $table->integer('exercise');
         });
     }
 

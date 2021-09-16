@@ -51,7 +51,7 @@
                                 <td>{{$t['birth']}}</td>
                                 <td>
                                 @foreach($t->subjects as $item)
-                                        {{$item->name."(".$item->lecture."/".$item->exercise.") ,"}}
+                                        {{$item->name." ,"}}
                                 @endforeach
                                 </td>
                             </tr>
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="container" style="width: 50%">
+        <div class="container">
             <div class="row" >
                 <div class="col-sm" style="text-align: center;padding-top: 2%">
                     <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
@@ -87,7 +87,7 @@
                                 <td>{{$sub->pc}}</td>
                                 <td>
                                     @foreach($sub->teachers as $item)
-                                            {{$item->firstName." ".$item->lastName."(".$item->lecture."/".$item->exercise.") ,"}}
+                                            {{$item->firstName." ".$item->lastName." ,"}}
                                     @endforeach
                                 </td>
                             </tr>

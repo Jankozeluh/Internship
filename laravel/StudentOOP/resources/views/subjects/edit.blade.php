@@ -4,35 +4,32 @@
     <div class="container" style="width: 50%">
         <div class="row">
             <div class="col-sm">
-                <form action="/students/{{$student->id}}" method="POST" class="px-4 py-3" style="text-align: center">
+                <form action="/subjects/{{$subject->id}}" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
                     @method('PUT')
+{{--                 ['name','credits','semester','garant','pc']--}}
                     <h4 style="text-align: center">EDIT</h4>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Degree</span>
-                        <input type="text" name="degree" class="form-control" value="{{$student->degree}}">
-                    </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">First name</span>
-                        <input type="text" name="firstName" class="form-control" value="{{$student->firstName}}" >
-                    </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Last name</span>
-                        <input type="text" name="lastName" class="form-control" value="{{$student->lastName}}">
-                    </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Birth</span>
-                        <input type="date" name="birth" class="form-control" value="{{$student->birth}}">
-                    </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Enrollment</span>
-                        <input type="date" name="enrollment" class="form-control" value="{{$student->enrollment}}">
+                        <span class="input-group-text">Name</span>
+                        <input type="text" name="name" class="form-control" value="{{$subject->name}}">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Credits</span>
-                        <input type="number" name="credits" class="form-control" value="{{$student->credits}}">
+                        <input type="number" name="credits" class="form-control" value="{{$subject->credits}}" >
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Edit this student" />
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Semester</span>
+                        <input type="number" name="semester" class="form-control" value="{{$subject->semester}}">
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Pc</span>
+                        <select name="pc" required>
+                            <option value="" selected disabled hidden>Choose here</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <input type="submit" name="edit" class="btn btn-secondary" value="Edit this subject" />
                 </form>
             </div>
         </div>

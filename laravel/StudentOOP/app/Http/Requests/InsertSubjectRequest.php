@@ -27,7 +27,7 @@ class InsertSubjectRequest extends FormRequest
             'name' => 'required',
             'credits' => 'required',
             'semester' => 'required',
-            'garant' => 'required',
+            //'garant' => 'required',
             'pc' => 'required',
         ];
     }

@@ -16,11 +16,9 @@ class Subject extends Model
     public function garantName(){
         return $this->hasOne(Teacher::class,'id','garant');
     }
-
     public function teachers(){
         return $this->belongsToMany(Teacher::class,'sub_teacher','subject_id','teacher_id');
     }
-
     public function students(){
         return $this->belongsToMany(Student::class,'sub_student','subject_id','student_id');
     }

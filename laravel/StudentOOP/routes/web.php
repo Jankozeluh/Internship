@@ -42,6 +42,11 @@ Route::prefix('students')->group(function () {
 });
 Route::resource('/students', StudentController::class);
 
+Route::prefix('subjects')->group(function () {
+    Route::post('{subject}/delete/teacher', [SubjectController::class,'deleteTeacher']);
+    Route::post('{subject}/add/teacher/submit', [SubjectController::class,'addTeacher']);
+    Route::get('{subject}/add/teacher', [SubjectController::class,'teacher']);
+});
 Route::resource('/teachers', TeacherController::class);
 Route::resource('/subjects', SubjectController::class);
 
