@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InsertStudentRequest;
 use App\Http\Requests\InsertSubjectRequest;
 use App\Models\Student;
 use App\Models\Subject;
@@ -42,7 +41,6 @@ class SubjectController extends Controller
      */
     public function store(InsertSubjectRequest $request)
     {
-        //['name','credits','semester','garant','pc']
         $request->validated();
         Subject::create([
             'name' => $request->input('name'),
@@ -51,7 +49,6 @@ class SubjectController extends Controller
             'garant' => (int)$request->input('garant'),
             'pc' => $request->input('pc'),
         ]);
-
         return redirect('/subjects');
     }
 
@@ -78,7 +75,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show avaiable teachers for the subject.
      *
      * @param  \App\Models\Subject  $subject
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
@@ -89,7 +86,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * Add a subject for student.
+     * Add a teacher for subject.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Subject  $subject
@@ -133,7 +130,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * Delete a subject from a student.
+     * Delete a teacher from a subject.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Subject  $subject
@@ -143,18 +140,5 @@ class SubjectController extends Controller
     {
         Subject::find($subject->id)->teachers()->detach($request->teacherId);
         return redirect('/subjects');
-    }
-
-    /**
-     * Delete a subject from a student.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Student  $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
-     */
-    public function deleteSubject(Student $student, Request $request)
-    {
-        Student::find($student->id)->enrolledSubjects()->detach($request->subId);
-        return redirect('/students');
     }
 }

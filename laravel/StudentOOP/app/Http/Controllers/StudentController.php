@@ -109,7 +109,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show selector of available subjects for the student.
      *
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
@@ -144,6 +144,12 @@ class StudentController extends Controller
         return redirect('/students');
     }
 
+    /**
+     * Remove the specified resource from storage when it got 80+ credits.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
     public function leave(Student $student){
         if((Student::find($student->id)->credits)>80){
             $student->delete();
