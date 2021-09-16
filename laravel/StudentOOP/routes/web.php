@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -19,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/',[PrintController::class,'print']);
 
 //Route::get('/students/{students}', [StudentController::class, 'index']);
 //
@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 ////
 //Route::post('subject',[SubjectControllerOld::class,'findAction']);
 //Route::view("/subject",'Subject');
+
+Route::get('/',[HomeController::class,'index']);
 
 Route::prefix('students')->group(function () {
     Route::post('{student}/leave', [StudentController::class,'leave']);

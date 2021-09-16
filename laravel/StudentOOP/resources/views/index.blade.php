@@ -17,18 +17,16 @@
                                 <th>Subjects</th>
                             </tr>
                         </thead>
-                        @foreach($studentData as $student)
+                        @foreach($student as $st)
                             <tr>
-                                <th>{{$student['id']}}</th>
-                                <td>{{$student['degree']." ".$student['firstName']." ".$student['lastName']}}</td>
-                                <td>{{$student['birth']}}</td>
-                                <td>{{$student['enrollment']}}</td>
-                                <td>{{$student['credits']}}</td>
+                                <th style="border-right: solid 1px #000;">{{$st['id']}}</th>
+                                <td>{{$st['degree']." ".$st['firstName']." ".$st['lastName']}}</td>
+                                <td>{{$st['birth']}}</td>
+                                <td>{{$st['enrollment']}}</td>
+                                <td>{{$st['credits']}}</td>
                                 <td>
-                                    @foreach($studentSubData as $item)
-                                        @if((int)$item->id===$student['id'])
-                                            {{$item->name." ,"}}
-                                        @endif
+                                    @foreach($st->enrolledSubjects as $item)
+                                        {{$item->name." ,"}}
                                     @endforeach
                                 </td>
                             </tr>
@@ -37,7 +35,7 @@
                 </div>
                 <div class="col-sm" style="text-align: center;padding-top: 2%">
                     <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm ">
-                        <a href="{{ url('/teacher') }}"><h4>Teachers</h4></a>
+                        <a href="{{ url('/teachers') }}"><h4>Teachers</h4></a>
                         <thead>
                         <tr>
                             <th>#</th>
@@ -46,16 +44,14 @@
                             <th>Subjects</th>
                         </tr>
                         </thead>
-                        @foreach($teacherData as $teacher)
+                        @foreach($teacher as $t)
                             <tr>
-                                <th scope="row">{{$teacher['id']}}</th>
-                                <td>{{$teacher['degree']." ".$teacher['firstName']." ".$teacher['lastName']}}</td>
-                                <td>{{$teacher['birth']}}</td>
+                                <th scope="row" style="border-right: solid 1px #000;">{{$t['id']}}</th>
+                                <td>{{$t['degree']." ".$t['firstName']." ".$t['lastName']}}</td>
+                                <td>{{$t['birth']}}</td>
                                 <td>
-                                @foreach($teacherSubData as $item)
-                                    @if((int)$item->idt===$teacher['id'])
+                                @foreach($t->subjects as $item)
                                         {{$item->name."(".$item->lecture."/".$item->exercise.") ,"}}
-                                    @endif
                                 @endforeach
                                 </td>
                             </tr>
@@ -69,10 +65,10 @@
             <div class="row" >
                 <div class="col-sm" style="text-align: center;padding-top: 2%">
                     <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                        <a href="{{ url('/subject') }}"><h4>Subjects</h4></a>
+                        <a href="{{ url('/subjects') }}"><h4>Subjects</h4></a>
                         <thead>
                             <tr>
-                                <th scope="row">#</th>
+                                <th scope="row" >#</th>
                                 <th scope="row">Name</th>
                                 <th scope="row">Credits</th>
                                 <th scope="row">Semester</th>
@@ -81,19 +77,17 @@
                                 <th scope="row">Teachers</th>
                             </tr>
                         </thead>
-                        @foreach($subjectData as $subject)
+                        @foreach($subject as $sub)
                             <tr>
-                                <th scope="row">{{$subject->id}}</th>
-                                <td>{{$subject->name}}</td>
-                                <td>{{$subject->credits}}</td>
-                                <td>{{$subject->semester}}</td>
-                                <td>{{$subject->degree." ".$subject->firstName." ".$subject->lastName}}</td>
-                                <td>{{$subject->pc}}</td>
+                                <th scope="row" style="border-right: solid 1px #000;">{{$sub->id}}</th>
+                                <td>{{$sub->name}}</td>
+                                <td>{{$sub->credits}}</td>
+                                <td>{{$sub->semester}}</td>
+                                <td>{{$sub->garantName->degree." ".$sub->garantName->firstName." ".$sub->garantName->lastName}}</td>
+                                <td>{{$sub->pc}}</td>
                                 <td>
-                                    @foreach($teacherSubData as $item)
-                                        @if($item->id===$subject->id)
+                                    @foreach($sub->teachers as $item)
                                             {{$item->firstName." ".$item->lastName."(".$item->lecture."/".$item->exercise.") ,"}}
-                                        @endif
                                     @endforeach
                                 </td>
                             </tr>
