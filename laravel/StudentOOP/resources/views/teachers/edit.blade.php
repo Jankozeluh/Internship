@@ -4,21 +4,21 @@
     <div class="container" style="width: 50%">
         <div class="row">
             <div class="col-sm">
-                <form action="/subjects/{{$subject->id}}" method="POST" class="px-4 py-3" style="text-align: center">
+                <form action="/teachers/{{$teacher->id}}" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
                     @method('PUT')
                     <h4 style="text-align: center">EDIT</h4>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Name</span>
-                        <input type="text" name="degree" class="form-control" value="{{$subject->name}}">
+                        <span class="input-group-text">Degree</span>
+                        <input type="text" name="degree" class="form-control" value="{{$teacher->degree}}">
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Credits</span>
-                        <input type="text" name="firstName" class="form-control" value="{{$subject->credits}}">
+                        <span class="input-group-text">First name</span>
+                        <input type="text" name="firstName" class="form-control" value="{{$teacher->firstName}}">
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Garant</span>
-                        <input type="text" name="lastName" class="form-control" value="{{$subject->lastName}}">
+                        <span class="input-group-text">Last name</span>
+                        <input type="text" name="lastName" class="form-control" value="{{$teacher->lastName}}">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Birth</span>

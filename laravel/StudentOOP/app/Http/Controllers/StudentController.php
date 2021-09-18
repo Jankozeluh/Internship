@@ -46,8 +46,8 @@ class StudentController extends Controller
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
             'credits' => (int)$request->input('credits'),
-            'birth' => ((string)date("Y/m/d", strtotime($request->input('birth')))),
-            'enrollment' => ((string)date("Y/m/d", strtotime($request->input('enrollment')))),
+            'birth' => $request->input('birth'),
+            'enrollment' => $request->input('enrollment'),
         ]);
 
         return redirect('/students');
@@ -90,8 +90,8 @@ class StudentController extends Controller
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
             'credits' => (int)$request->input('credits'),
-            'birth' => ((string)date("Y/m/d", strtotime($request->input('birth')))),
-            'enrollment' => ((string)date("Y/m/d", strtotime($request->input('enrollment')))),
+            'birth' => $request->input('birth'),
+            'enrollment' => $request->input('enrollment'),
         ]);
         return redirect('/students');
     }
