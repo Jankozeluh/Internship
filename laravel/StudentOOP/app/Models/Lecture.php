@@ -10,5 +10,5 @@ class Lecture extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'lectures';
-    protected $fillable = ['name','date','subject_id','teacher_id'];
+    protected $fillable = ['name','date','subject_id','teacher_id','group_id'];
 }

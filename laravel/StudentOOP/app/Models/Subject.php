@@ -10,7 +10,7 @@ class Subject extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'subjects';
-    protected $fillable = ['name','credits','semester','garant','pc'];
+    protected $fillable = ['name','credits','semester','garant'];
 
     public function garantName(){
         return $this->hasOne(Teacher::class,'id','garant');

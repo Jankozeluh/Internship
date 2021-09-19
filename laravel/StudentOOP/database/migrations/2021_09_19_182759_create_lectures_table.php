@@ -19,6 +19,7 @@ class CreateLecturesTable extends Migration
             $table->string('date');
             $table->foreignId('subject_id',)->constrained()->onDelete('cascade');
             $table->foreignId('teacher_id',)->constrained()->onDelete('cascade');
+            $table->foreignId('group_id',)->constrained()->onDelete('cascade');
         });
     }
 
