@@ -28,7 +28,6 @@ class InsertSubjectRequest extends FormRequest
             'credits' => 'required',
             'semester' => 'required',
             //'garant' => 'required',
-            'pc' => 'required',
         ];
     }
 }

@@ -13,7 +13,7 @@ class Student extends Model
     protected $table = 'students';
     protected $fillable = ['degree','firstName','lastName','credits','birth','enrollment'];
 
-    public function enrolledSubjects(){
+    public function subjects(){
         return $this->belongsToMany(Subject::class,'sub_student','student_id','subject_id');
     }
 

@@ -1,12 +1,6 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PrintController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\TeacherController;
 use App\Http\Controllers;
-use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,40 +14,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-//Route::get('/students/{students}', [StudentController::class, 'index']);
-//
-//Route::post('students',[StudentControllerOld::class,'findAction']);
-//Route::view("/students",'Student');
-////
-//Route::post('teacher',[TeacherControllerOld::class,'findAction']);
-//Route::view("/teacher",'Teacher');
-////
-//Route::post('subject',[SubjectControllerOld::class,'findAction']);
-//Route::view("/subject",'Subject');
-
-Route::get('/',[HomeController::class,'index']);
+Route::get('/',[Controllers\HomeController::class,'index']);
 
 Route::prefix('students')->group(function () {
-    Route::post('{student}/leave', [StudentController::class,'leave']);
-    Route::post('{student}/delete/subject', [StudentController::class,'deleteSubject']);
-    Route::post('{student}/add/subject/submit', [StudentController::class,'addSubject']);
-    Route::get('{student}/add/subject', [StudentController::class,'subject']);
+    Route::post('{student}/leave', [Controllers\StudentController::class,'leave']);
+    Route::post('{student}/delete/subject', [Controllers\StudentController::class,'deleteSubject']);
+    Route::post('{student}/add/subject/submit', [Controllers\StudentController::class,'addSubject']);
+    Route::get('{student}/add/subject', [Controllers\StudentController::class,'subject']);
 });
-Route::resource('/students', StudentController::class);
+Route::resource('/students', Controllers\StudentController::class);
 
 Route::prefix('subjects')->group(function () {
-    Route::post('{subject}/delete/teacher', [SubjectController::class,'deleteTeacher']);
-    Route::post('{subject}/add/teacher/submit', [SubjectController::class,'addTeacher']);
-    Route::get('{subject}/add/teacher', [SubjectController::class,'teacher']);
+    Route::post('{subject}/delete/teacher', [Controllers\SubjectController::class,'deleteTeacher']);
+    Route::post('{subject}/add/teacher/submit', [Controllers\SubjectController::class,'addTeacher']);
+    Route::get('{subject}/add/teacher', [Controllers\SubjectController::class,'teacher']);
 });
-Route::resource('/subjects', SubjectController::class);
+Route::resource('/subjects', Controllers\SubjectController::class);
 
 Route::prefix('teachers')->group(function () {
-    Route::post('{teacher}/delete/subject', [TeacherController::class,'deleteSubject']);
-    Route::post('{teacher}/add/subject/submit', [TeacherController::class,'addSubject']);
-    Route::get('{teacher}/add/subject', [TeacherController::class,'subject']);
+    Route::post('{teacher}/delete/subject', [Controllers\TeacherController::class,'deleteSubject']);
+    Route::post('{teacher}/add/subject/submit', [Controllers\TeacherController::class,'addSubject']);
+    Route::get('{teacher}/add/subject', [Controllers\TeacherController::class,'subject']);
 });
-Route::resource('/teachers', TeacherController::class);
+Route::resource('/teachers', Controllers\TeacherController::class);
+
+Route::resource('/lectures', Controllers\LectureController::class);
+Route::resource('/groups', Controllers\GroupController::class);
+Route::resource('/exercises', Controllers\ExerciseController::class);
+
 
 

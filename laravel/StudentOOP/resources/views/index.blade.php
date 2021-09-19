@@ -73,7 +73,6 @@
                                 <th scope="row">Credits</th>
                                 <th scope="row">Semester</th>
                                 <th scope="row">Garant</th>
-                                <th scope="row">Pc</th>
                                 <th scope="row">Teachers</th>
                             </tr>
                         </thead>
@@ -84,7 +83,6 @@
                                 <td>{{$sub->credits}}</td>
                                 <td>{{$sub->semester}}</td>
                                 <td>{{$sub->garantName->degree." ".$sub->garantName->firstName." ".$sub->garantName->lastName}}</td>
-                                <td>{{$sub->pc}}</td>
                                 <td>
                                     @foreach($sub->teachers as $item)
                                             {{$item->firstName." ".$item->lastName." ,"}}

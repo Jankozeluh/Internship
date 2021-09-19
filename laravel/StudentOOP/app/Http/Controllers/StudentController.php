@@ -127,7 +127,7 @@ class StudentController extends Controller
     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
     */
     public function addSubject(Request $request,Student $student){
-        Student::find($student->id)->enrolledSubjects()->attach($request->subject);
+        Student::find($student->id)->subjects()->attach($request->subject);
         return redirect('/students');
     }
 
@@ -140,7 +140,7 @@ class StudentController extends Controller
      */
     public function deleteSubject(Student $student, Request $request)
     {
-        Student::find($student->id)->enrolledSubjects()->detach($request->subId);
+        Student::find($student->id)->subjects()->detach($request->subId);
         return redirect('/students');
     }
 

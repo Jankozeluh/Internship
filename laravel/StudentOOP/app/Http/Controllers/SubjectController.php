@@ -47,7 +47,6 @@ class SubjectController extends Controller
             'credits' => (int)$request->input('credits'),
             'semester' => (int)$request->input('semester'),
             'garant' => (int)$request->input('garant'),
-            'pc' => $request->input('pc'),
         ]);
         return redirect('/subjects');
     }
@@ -112,7 +111,6 @@ class SubjectController extends Controller
             'credits' => $request->input('credits'),
             'semester' => $request->input('semester'),
             'garant' => $subject->garant,
-            'pc' => $request->input('pc'),
         ]);
         return redirect('/subjects');
     }

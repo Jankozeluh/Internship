@@ -14,7 +14,6 @@
                         <th scope="row">Credits</th>
                         <th scope="row">Semester</th>
                         <th scope="row">Garant</th>
-                        <th scope="row">Pc</th>
                         <th scope="row">Teachers</th>
                         <th></th>
                         <th></th>
@@ -27,7 +26,6 @@
                                     <td>{{$sub->credits}}</td>
                                     <td>{{$sub->semester}}</td>
                                     <td>{{$sub->garantName->degree . " " . $sub->garantName->firstName . " " . $sub->garantName->lastName}}</td>
-                                    <td>{{$sub->pc}}</td>
                                     <td>
                                         <form action="/subjects/{{$sub->id}}/delete/teacher" method="POST">
                                             @csrf

@@ -7,7 +7,6 @@
                 <form action="/subjects/{{$subject->id}}" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
                     @method('PUT')
-{{--                 ['name','credits','semester','garant','pc']--}}
                     <h4 style="text-align: center">EDIT</h4>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Name</span>
@@ -20,14 +19,6 @@
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Semester</span>
                         <input type="number" name="semester" class="form-control" value="{{$subject->semester}}">
-                    </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Pc</span>
-                        <select name="pc" required>
-                            <option value="" selected disabled hidden>Choose here</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
                     </div>
                     <input type="submit" name="edit" class="btn btn-secondary" value="Edit this subject" />
                 </form>

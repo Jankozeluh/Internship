@@ -10,7 +10,6 @@ class Subject extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'subjects';
-    protected $primaryKey = 'id';
     protected $fillable = ['name','credits','semester','garant','pc'];
 
     public function garantName(){
