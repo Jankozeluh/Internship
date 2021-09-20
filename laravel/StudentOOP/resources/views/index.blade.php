@@ -128,9 +128,23 @@
                     <thead>
                     <tr>
                         <th scope="row">#</th>
-                        <th></th>
+                        <th scope="row">Name</th>
+                        <th scope="row">Date</th>
+                        <th scope="row">Subject</th>
+                        <th scope="row">Teacher</th>
+                        <th scope="row">Group</th>
                     </tr>
                     </thead>
+                    @foreach($lecture as $lec)
+                        <tr>
+                            <th style="border-right: solid 1px #000;">{{$lec['id']}}</th>
+                            <td>{{$lec['name']}}</td>
+                            <td>{{$lec['date']}}</td>
+                            <td>{{$lec->subject->name}}</td>
+                            <td>{{$lec->teacher->degree.' '.$lec->teacher->firstName.' '.$lec->teacher->lastName}}</td>
+                            <td>{{$lec->group->code}}</td>
+                        </tr>
+                    @endforeach
                 </table>
             </div>
         </div>
