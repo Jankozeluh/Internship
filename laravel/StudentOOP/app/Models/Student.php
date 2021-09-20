@@ -17,4 +17,8 @@ class Student extends Model
         return $this->belongsToMany(Subject::class,'sub_student','student_id','subject_id');
     }
 
+    public function groups(){
+        return $this->belongsToMany(Group::class,'stu_group','student_id','group_id');
+    }
+
 }

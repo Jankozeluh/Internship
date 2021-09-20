@@ -15,4 +15,12 @@ class Group extends Model
     public function students(){
         return $this->belongsToMany(Student::class,'stu_group','group_id','student_id');
     }
+
+    public function lectures(){
+        return $this->hasMany(Lecture::class,'group_id','id');
+    }
+//
+//    public function exercises(){
+//        return $this->belongsToMany(::class,'stu_group','group_id','student_id');
+//    }
 }

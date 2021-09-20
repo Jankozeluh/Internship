@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -13,7 +14,8 @@ class HomeController extends Controller{
         return view('index',[
             'subject'=>Subject::all(),
             'student'=>Student::all(),
-            'teacher'=>Teacher::all()
+            'teacher'=>Teacher::all(),
+            'group'=>Group::all()
         ]);
     }
 }

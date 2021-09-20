@@ -25,7 +25,7 @@
                                 <td>{{$st['enrollment']}}</td>
                                 <td>{{$st['credits']}}</td>
                                 <td>
-                                    @foreach($st->enrolledSubjects as $item)
+                                    @foreach($st->subjects as $item)
                                         {{$item->name." ,"}}
                                     @endforeach
                                 </td>
@@ -94,4 +94,61 @@
                 </div>
             </div>
         </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style="text-align: center;padding-top: 2%">
+                <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
+                    <a href="{{ url('/groups') }}"><h4>Groups</h4></a>
+                    <thead>
+                    <tr>
+                        <th scope="row">#</th>
+                        <th>Code</th>
+                        <th>Semester</th>
+                        <th>Students</th>
+                    </tr>
+                    </thead>
+                    @foreach($group as $grp)
+                        <tr>
+                            <th style="border-right: solid 1px #000;">{{$grp['id']}}</th>
+                            <td>{{$grp['code']}}</td>
+                            <td>{{$grp['semester']}}</td>
+                            <td>
+                                @foreach($grp->students as $item)
+                                    {{$item->firstName." ".$item->lastName." ,\n"}}
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+            <div class="col-sm" style="text-align: center;padding-top: 2%">
+                <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
+                    <a href="{{ url('/lectures') }}"><h4>Lectures</h4></a>
+                    <thead>
+                    <tr>
+                        <th scope="row">#</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style="text-align: center;padding-top: 2%">
+                <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
+                    <a href="{{ url('/exercises') }}"><h4>Exercises</h4></a>
+                    <thead>
+                        <tr>
+                            <th scope="row">#</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection
