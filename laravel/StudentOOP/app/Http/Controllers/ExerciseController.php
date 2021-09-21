@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InsertExerciseRequest;
 use App\Models\Exercise;
 use Illuminate\Http\Request;
 
@@ -10,11 +11,13 @@ class ExerciseController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return view('exercises.index',[
+            'exercise'=>Exercise::all()
+        ]);
     }
 
     /**
@@ -33,7 +36,7 @@ class ExerciseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InsertExerciseRequest $request)
     {
         //
     }
@@ -67,7 +70,7 @@ class ExerciseController extends Controller
      * @param  \App\Models\Exercise  $exercise
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Exercise $exercise)
+    public function update(InsertExerciseRequest $request, Exercise $exercise)
     {
         //
     }

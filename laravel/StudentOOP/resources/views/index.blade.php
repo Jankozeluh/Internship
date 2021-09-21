@@ -99,31 +99,6 @@
         <div class="row">
             <div class="col-sm" style="text-align: center;padding-top: 2%">
                 <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                    <a href="{{ url('/groups') }}"><h4>Groups</h4></a>
-                    <thead>
-                    <tr>
-                        <th scope="row">#</th>
-                        <th>Code</th>
-                        <th>Semester</th>
-                        <th>Students</th>
-                    </tr>
-                    </thead>
-                    @foreach($group as $grp)
-                        <tr>
-                            <th style="border-right: solid 1px #000;">{{$grp['id']}}</th>
-                            <td>{{$grp['code']}}</td>
-                            <td>{{$grp['semester']}}</td>
-                            <td>
-                                @foreach($grp->students as $item)
-                                    {{$item->firstName." ".$item->lastName." ,\n"}}
-                                @endforeach
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
-            <div class="col-sm" style="text-align: center;padding-top: 2%">
-                <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
                     <a href="{{ url('/lectures') }}"><h4>Lectures</h4></a>
                     <thead>
                     <tr>
@@ -147,6 +122,31 @@
                     @endforeach
                 </table>
             </div>
+            <div class="col-sm" style="text-align: center;padding-top: 2%">
+                <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
+                    <a href="{{ url('/exercises') }}"><h4>Exercises</h4></a>
+                    <thead>
+                    <tr>
+                        <th scope="row">#</th>
+                        <th scope="row">Name</th>
+                        <th scope="row">Date</th>
+                        <th scope="row">Subject</th>
+                        <th scope="row">Teacher</th>
+                        <th scope="row">Group</th>
+                    </tr>
+                    </thead>
+                    @foreach($exercise as $exe)
+                        <tr>
+                            <th style="border-right: solid 1px #000;">{{$exe['id']}}</th>
+                            <td>{{$exe['name']}}</td>
+                            <td>{{$exe['date']}}</td>
+                            <td>{{$exe->subject->name}}</td>
+                            <td>{{$exe->teacher->degree.' '.$lec->teacher->firstName.' '.$lec->teacher->lastName}}</td>
+                            <td>{{$exe->group->code}}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
     </div>
 
@@ -154,13 +154,39 @@
         <div class="row">
             <div class="col-sm" style="text-align: center;padding-top: 2%">
                 <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                    <a href="{{ url('/exercises') }}"><h4>Exercises</h4></a>
+                    <a href="{{ url('/groups') }}"><h4>Groups</h4></a>
                     <thead>
-                        <tr>
-                            <th scope="row">#</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th scope="row">#</th>
+                        <th>Code</th>
+                        <th>Semester</th>
+                        <th>Students</th>
+                        <th>Lectures</th>
+                        <th>Exercises</th>
+                    </tr>
                     </thead>
+                    @foreach($group as $grp)
+                        <tr>
+                            <th style="border-right: solid 1px #000;">{{$grp['id']}}</th>
+                            <td>{{$grp['code']}}</td>
+                            <td>{{$grp['semester']}}</td>
+                            <td>
+                                @foreach($grp->students as $item)
+                                    {{$item->firstName." ".$item->lastName}}<br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($grp->lectures as $item)
+                                    {{$item->name." - ".$item->date}}<br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($grp->exercises as $item)
+                                    {{$item->name." - ".$item->date}}<br>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
                 </table>
             </div>
         </div>

@@ -38,4 +38,9 @@
                 </div>
             </div>
     </div>
+    <div class="container" style="width: 10%; text-align: center">
+        <div class="row">
+            <button name="insert" class="btn btn-secondary"><a href="/groups/create" style="color: white">Create</a></button>
+        </div>
+    </div>
 @endsection
