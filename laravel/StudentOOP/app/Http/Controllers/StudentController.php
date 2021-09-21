@@ -18,7 +18,7 @@ class StudentController extends Controller
     public function index()
     {
          return view('students.index',[
-             'student'=>Student::all()
+             'student'=>Student::sortable()->paginate(10)
          ]);
     }
 

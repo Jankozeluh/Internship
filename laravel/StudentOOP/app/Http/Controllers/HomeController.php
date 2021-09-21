@@ -13,12 +13,12 @@ use App\Models\Subject;
 class HomeController extends Controller{
     public function index(){
         return view('index',[
-            'subject'=>Subject::all(),
-            'student'=>Student::all(),
-            'teacher'=>Teacher::all(),
-            'group'=>Group::all(),
-            'lecture'=>Lecture::all(),
-            'exercise'=>Exercise::all()
+            'subject'=>Subject::paginate(5),
+            'student'=>Student::paginate(5),
+            'teacher'=>Teacher::paginate(5),
+            'group'=>Group::paginate(5),
+            'lecture'=>Lecture::paginate(5),
+            'exercise'=>Exercise::paginate(5)
         ]);
     }
 }

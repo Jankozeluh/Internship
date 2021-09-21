@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Kyslik\ColumnSortable\Sortable;
 
 class Student extends Model
 {
-    use HasFactory;
+    //use HasFactory;
+    use Sortable;
     public $timestamps = false;
     protected $table = 'students';
     protected $fillable = ['degree','firstName','lastName','credits','birth','enrollment'];
+    public $sortable = ['id', 'degree', 'firstName', 'lastName', 'credits', 'birth', 'enrollment'];
 
     public function subjects(){
         return $this->belongsToMany(Subject::class,'sub_student','student_id','subject_id');

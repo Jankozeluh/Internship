@@ -20,12 +20,13 @@
                     <a href="{{ url('/students') }}"><h4>Students</h4></a>
                     <thead>
                     <tr>
-                        <th scope="row">#</th>
-                        <th>Groups</th>
+                        <th scope="row">@sortablelink('id')</th>
+{{--                        <th>@sortablelink('groups.code', 'code')</th>--}}
+                        <th>Group</th>
                         <th>Name</th>
-                        <th>Birth</th>
-                        <th>Enrollment</th>
-                        <th>Credits</th>
+                        <th>@sortablelink('birth')</th>
+                        <th>@sortablelink('enrollment')</th>
+                        <th>@sortablelink('credits')</th>
                         <th>Subjects</th>
                         <th></th>
                         <th></th>
@@ -72,6 +73,7 @@
                     @endforeach
                 </table>
             </div>
+            <div class="d-flex justify-content-center" style="margin-bottom: 15px;margin-top: 5px">{{$student->links("pagination::bootstrap-4")}}</div>
         </div>
     </div>
     <div class="container" style="width: 10%; text-align: center">

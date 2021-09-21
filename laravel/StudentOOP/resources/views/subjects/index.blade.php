@@ -8,16 +8,16 @@
                 <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
                     <a href="{{ url('/subjects') }}"><h4>Subjects</h4></a>
                     <thead>
-                    <tr>
-                        <th scope="row">#</th>
-                        <th scope="row">Name</th>
-                        <th scope="row">Credits</th>
-                        <th scope="row">Semester</th>
-                        <th scope="row">Garant</th>
-                        <th scope="row">Teachers</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th scope="row">@sortablelink('id')</th>
+                            <th scope="row">@sortablelink('name')</th>
+                            <th scope="row">@sortablelink('credits')</th>
+                            <th scope="row">@sortablelink('semester')</th>
+                            <th scope="row">@sortablelink('garantName.firstName','Garant')</th>
+                            <th scope="row">Teachers</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </thead>
                     @foreach($subject as $sub)
                             <tr>
@@ -49,9 +49,11 @@
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content-center" style="margin-bottom: 15px;margin-top: 5px">{{$subject->links("pagination::bootstrap-4")}}</div>
     <div class="container" style="width: 10%; text-align: center">
         <div class="row">
             <button name="insert" class="btn btn-secondary"><a href="/subjects/create" style="color: white">Create</a></button>
         </div>
     </div>
+
 @endsection

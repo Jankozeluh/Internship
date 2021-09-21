@@ -28,7 +28,7 @@ class GroupController extends Controller
     public function index()
     {
         return view('groups.index',[
-            'group'=>Group::all()
+            'group'=>Group::sortable()->paginate(10)
         ]);
     }
 
@@ -57,11 +57,11 @@ class GroupController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Group  $group
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Group $group)
     {
-        //
+        return view('groups.show')->with('group',Group::find($group->id));
     }
 
     /**

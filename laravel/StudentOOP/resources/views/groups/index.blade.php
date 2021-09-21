@@ -10,8 +10,8 @@
                         <thead>
                             <tr>
                                 <th scope="row">#</th>
-                                <th>Code</th>
-                                <th>Semester</th>
+                                <th>@sortablelink('code')</th>
+                                <th>@sortablelink('semester')</th>
                                 <th>Students</th>
                                 <th>Lectures</th>
                                 <th>Exercises</th>
@@ -37,6 +37,7 @@
                     </table>
                 </div>
             </div>
+        <div class="d-flex justify-content-center" style="margin-bottom: 15px;margin-top: 5px">{{$group->links("pagination::bootstrap-4")}}</div>
     </div>
     <div class="container" style="width: 10%; text-align: center">
         <div class="row">

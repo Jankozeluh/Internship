@@ -19,7 +19,7 @@ class SubjectController extends Controller
     public function index()
     {
         return view('subjects.index',[
-            'subject'=>Subject::all()
+            'subject'=>Subject::sortable()->paginate(10)
         ]);
     }
 

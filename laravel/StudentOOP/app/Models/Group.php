@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Group extends Model
 {
     use HasFactory;
+    use Sortable;
     public $timestamps = false;
     protected $table = 'groups';
     protected $fillable = ['code','semester'];
+    public $sortable = ['code', 'semester'];
 
     public function students(){
         return $this->belongsToMany(Student::class,'stu_group','group_id','student_id');
