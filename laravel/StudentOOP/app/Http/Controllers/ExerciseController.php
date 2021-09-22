@@ -69,11 +69,11 @@ class ExerciseController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Exercise  $exercise
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Exercise $exercise)
     {
-        //
+        return view('exercises.edit')->with('exercise',Exercise::find($exercise->id))->with('subject',Subject::all())->with('teacher',Teacher::all())->with('group',Group::all());
     }
 
     /**
@@ -81,11 +81,20 @@ class ExerciseController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Exercise  $exercise
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(InsertExerciseRequest $request, Exercise $exercise)
     {
-        //
+        $request->validated();
+        Exercise::where('id',$exercise->id)->update([
+            'name' => $request->input('name'),
+            'date' => $request->input('date'),
+            'subject_id' => $request->input('subject'),
+            'teacher_id' => $request->input('teacher'),
+            'group_id' => $request->input('group'),
+            'pc' => $request->input('pc'),
+        ]);
+        return redirect('/exercises');
     }
 
     /**

@@ -4,17 +4,17 @@
     <div class="container" style="width: 50%">
         <div class="row">
             <div class="col-sm">
-                <form action="/lectures/{{$lecture->id}}" method="POST" class="px-4 py-3" style="text-align: center">
+                <form action="/exercises/{{$exercise->id}}" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
                     @method('PUT')
                     <h4 style="text-align: center">EDIT</h4>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Name</span>
-                        <input type="text" name="name" class="form-control" value="{{$lecture->name}}">
+                        <input type="text" name="name" class="form-control" value="{{$exercise->name}}">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Date</span>
-                        <input type="date" name="date" class="form-control" value="{{$lecture->date}}" >
+                        <input type="date" name="date" class="form-control" value="{{$exercise->date}}" >
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Subject</span>
@@ -40,7 +40,14 @@
                             @endforeach
                         </select>
                     </div>
-                    <input type="submit" name="edit" class="btn btn-secondary" value="Edit this lecture" />
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">PC</span>
+                        <select name="pc" required>
+                            <option value='Yes'>Yes</option>
+                            <option value='No'>No</option>
+                        </select>
+                    </div>
+                    <input type="submit" name="edit" class="btn btn-secondary" value="Edit this exercise" />
                 </form>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InsertStudentRequest;
+use App\Models\Group;
 use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -156,5 +157,27 @@ class StudentController extends Controller
             return redirect('/students')->with('success','Student successfully left.');
         }
         return redirect('/students')->with('fail','Student cant left with credits smaller than 80.');
+    }
+
+    /**
+     * Show selector of available subjects for the student.
+     *
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function group(Student $student){
+        return view('students.add.group')->with('student',Student::find($student->id))->with('group', Group::all());
+    }
+
+    /**
+     * Add a subject for student.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Student  $student
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function addGroup(Request $request,Student $student){
+        Student::find($student->id)->groups()->attach($request->group);
+        return redirect('/students');
     }
 }
