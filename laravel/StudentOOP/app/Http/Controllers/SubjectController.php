@@ -57,9 +57,9 @@ class SubjectController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(Subject $subject)
     {
-        //
+        return view('subjects.show')->with('subject',Subject::find($subject->id));
     }
 
     /**

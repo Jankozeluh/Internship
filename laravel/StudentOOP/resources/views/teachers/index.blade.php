@@ -9,7 +9,7 @@
                     <a href="{{ url('/teachers') }}"><h4>Teachers</h4></a>
                     <thead>
                     <tr>
-                        <th scope="row">#</th>
+                        <th scope="row">@sortablelink('id')</th>
                         <th scope="row">Degree</th>
                         <th scope="row">First name</th>
                         <th scope="row">Last name</th>
@@ -21,8 +21,8 @@
                     </thead>
                     @foreach($teacher as $th)
                         <tr>
-                            <th>{{$th->id}}</th>
-                            <th>{{$th->degree}}</th>
+                            <th style="border-right: solid 1px #000;"><a href="/teachers/{{$th->id}}">{{$th->id}}</a></th>
+                            <td>{{$th->degree}}</td>
                             <td>{{$th->firstName}}</td>
                             <td>{{$th->lastName}}</td>
                             <td>{{$th->birth}}</td>
@@ -48,6 +48,7 @@
                 </table>
             </div>
         </div>
+        <div class="d-flex justify-content-center" style="margin-bottom: 15px;margin-top: 5px">{{$teacher->links("pagination::bootstrap-4")}}</div>
     </div>
     <div class="container" style="width: 10%; text-align: center">
         <div class="row">

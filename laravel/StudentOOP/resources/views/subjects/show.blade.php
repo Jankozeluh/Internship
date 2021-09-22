@@ -1,10 +1,16 @@
 @extends('layouts.master')
-@section('title',$group->code)
+@section('title',$subject->name)
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm" style="text-align: center;padding-top: 2%">
-                <h5>Semester: {{$group->semester}}</h5>
+{{--                    garantName,teachers,students,lectures,exercises
+                        'name','credits','semester','garant'
+--}}
+                <h5>Credits: {{$subject->credits}}</h5>
+                <h5>Semester: {{$subject->semester}}</h5>
+                <h5>Garant: {{$subject->garantName->degree . " " . $subject->garantName->firstName . " " . $subject->garantName->lastName}}</h5>
+
             </div>
         </div>
             <div class="row">
@@ -20,7 +26,7 @@
                             <th>Date</th>
                         </tr>
                         </thead>
-                            @foreach($group->lectures as $item)
+                            @foreach($subject->lectures as $item)
                             <tr>
                                 <td style="border-right: solid 1px #000;">{{$item->id}}</td>
                                 <td>{{$item->name}}</td>
@@ -42,7 +48,7 @@
                             <th>Enrollment</th>
                         </tr>
                         </thead>
-                            @foreach($group->students as $item)
+                            @foreach($subject->students as $item)
                                 <tr>
                                     <td style="border-right: solid 1px #000;"><a href="/students/{{$item->id}}">{{$item->id}}</a></td>
                                     <td><a href="/students/{{$item->id}}">{{$item->degree." ".$item->firstName." ".$item->lastName}}</a></td>
@@ -66,12 +72,12 @@
                         <th>Date</th>
                     </tr>
                     </thead>
-                        @foreach($group->exercises as $item)
+                        @foreach($subject->exercises as $item)
                             <tr>
                                 <td style="border-right: solid 1px #000;">{{$item->id}}</td>
                                 <td>{{$item->name}}</td>
-                                <td>{{$item->teacher->degree." ".$item->teacher->firstName." ".$item->teacher->lastName}}</td>
-                                <td>{{$item->subject->name}}</td>
+                                <td><a href="/teachers/{{$item->teacher->id}}">{{$item->teacher->degree." ".$item->teacher->firstName." ".$item->teacher->lastName}}</a></td>
+                                <td><a href="/subjects/{{$item->subject->id}}">{{$item->subject->name}}</a></td>
                                 <td>{{$item->date}}</td>
                             </tr>
                         @endforeach

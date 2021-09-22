@@ -17,6 +17,7 @@ class CreateExercisesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('pc');
+            $table->string('date');
             $table->foreignId('subject_id',)->constrained()->onDelete('cascade');
             $table->foreignId('teacher_id',)->constrained()->onDelete('cascade');
             $table->foreignId('group_id',)->constrained()->onDelete('cascade');

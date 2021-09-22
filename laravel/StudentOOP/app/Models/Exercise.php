@@ -10,7 +10,7 @@ class Exercise extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'exercises';
-    protected $fillable = ['name','pc','subject_id','teacher_id','group_id'];
+    protected $fillable = ['name','date','pc','subject_id','teacher_id','group_id'];
 
     public function subject(){
         return $this->hasOne(Subject::class,'id','subject_id');

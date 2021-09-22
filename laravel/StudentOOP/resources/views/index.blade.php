@@ -85,7 +85,7 @@
                                 <td>{{$sub->garantName->degree." ".$sub->garantName->firstName." ".$sub->garantName->lastName}}</td>
                                 <td>
                                     @foreach($sub->teachers as $item)
-                                            {{$item->firstName." ".$item->lastName." ,"}}
+                                            {{$item->degree." ".$item->firstName." ".$item->lastName." ,"}}
                                     @endforeach
                                 </td>
                             </tr>
@@ -133,6 +133,7 @@
                         <th scope="row">Subject</th>
                         <th scope="row">Teacher</th>
                         <th scope="row">Group</th>
+                        <th scope="row">PC needed</th>
                     </tr>
                     </thead>
                     @foreach($exercise as $exe)
@@ -143,6 +144,7 @@
                             <td>{{$exe->subject->name}}</td>
                             <td>{{$exe->teacher->degree.' '.$lec->teacher->firstName.' '.$lec->teacher->lastName}}</td>
                             <td>{{$exe->group->code}}</td>
+                            <td>{{$exe->pc}}</td>
                         </tr>
                     @endforeach
                 </table>

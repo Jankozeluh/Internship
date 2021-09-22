@@ -18,7 +18,7 @@ class TeacherController extends Controller
     public function index()
     {
         return view('teachers.index',[
-            'teacher'=>Teacher::all()
+            'teacher'=>Teacher::sortable()->paginate(10)
         ]);
     }
 
@@ -56,9 +56,9 @@ class TeacherController extends Controller
      * @param  \App\Models\Teacher  $teacher
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(Teacher $teacher)
     {
-        //
+        return view('teachers.show')->with('teacher',Teacher::find($teacher->id));
     }
 
     /**

@@ -4,7 +4,7 @@
     <div class="container" style="width: 50%">
         <div class="row">
             <div class="col-sm">
-                <form action="/lectures" method="POST" class="px-4 py-3" style="text-align: center">
+                <form action="/exercises" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
 {{--                'name','date','subject_id','teacher_id','group_id'--}}
                     <h4 style="text-align: center">INSERT</h4>
@@ -40,7 +40,14 @@
                             @endforeach
                         </select>
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new lecture" />
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">PC</span>
+                        <select name="pc" required>
+                                <option value='Yes'>Yes</option>
+                                <option value='No'>No</option>
+                        </select>
+                    </div>
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new exercise" />
                 </form>
             </div>
         </div>

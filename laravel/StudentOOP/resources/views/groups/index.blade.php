@@ -9,7 +9,7 @@
                         <a href="{{ url('/groups') }}"><h4>Groups</h4></a>
                         <thead>
                             <tr>
-                                <th scope="row">#</th>
+                                <th scope="row">@sortablelink('id')</th>
                                 <th>@sortablelink('code')</th>
                                 <th>@sortablelink('semester')</th>
                                 <th>Students</th>
@@ -19,16 +19,21 @@
                         </thead>
                         @foreach($group as $grp)
                             <tr>
-                                <th style="border-right: solid 1px #000;">{{$grp['id']}}</th>
-                                <td>{{$grp['code']}}</td>
-                                <td>{{$grp['semester']}}</td>
+                                <th style="border-right: solid 1px #000;"><a href="groups/{{$grp->id}}">{{$grp->id}}</a></th>
+                                <td>{{$grp->code}}</td>
+                                <td>{{$grp->semester}}</td>
                                 <td>
                                     @foreach($grp->students as $item)
-                                        {{$item->firstName." ".$item->lastName." ,"}}<br>
+                                        <a href="/students/{{$item->id}}">{{$item->firstName." ".$item->lastName." ,"}}</a><br>
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach($grp->lectures as $item)
+                                        {{$item->name." ,"}}<br>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($grp->exercises as $item)
                                         {{$item->name." ,"}}<br>
                                     @endforeach
                                 </td>

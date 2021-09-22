@@ -13,7 +13,7 @@ class Group extends Model
     public $timestamps = false;
     protected $table = 'groups';
     protected $fillable = ['code','semester'];
-    public $sortable = ['code', 'semester'];
+    public $sortable = ['id','code', 'semester'];
 
     public function students(){
         return $this->belongsToMany(Student::class,'stu_group','group_id','student_id');

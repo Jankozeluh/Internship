@@ -21,11 +21,11 @@
                     </thead>
                     @foreach($subject as $sub)
                             <tr>
-                                    <th>{{$sub->id}}</th>
+                                    <th style="border-right: solid 1px #000;"><a href="/subjects/{{$sub->id}}">{{$sub->id}}</th>
                                     <td>{{$sub->name}}</td>
                                     <td>{{$sub->credits}}</td>
                                     <td>{{$sub->semester}}</td>
-                                    <td>{{$sub->garantName->degree . " " . $sub->garantName->firstName . " " . $sub->garantName->lastName}}</td>
+                                    <td><a href="/teachers/{{$sub->garant}}">{{$sub->garantName->degree . " " . $sub->garantName->firstName . " " . $sub->garantName->lastName}}</a></td>
                                     <td>
                                         <form action="/subjects/{{$sub->id}}/delete/teacher" method="POST">
                                             @csrf

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InsertExerciseRequest;
 use App\Models\Exercise;
+use App\Models\Group;
+use App\Models\Lecture;
+use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
@@ -23,22 +27,31 @@ class ExerciseController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('exercises.create')->with('teacher',Teacher::all())->with('group',Group::all())->with('subject',Subject::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(InsertExerciseRequest $request)
     {
-        //
+        $request->validated();
+        Exercise::create([
+            'name' => $request->input('name'),
+            'date' => $request->input('date'),
+            'pc' => $request->input('pc'),
+            'subject_id' => $request->input('subject'),
+            'teacher_id' => $request->input('teacher'),
+            'group_id' => $request->input('group'),
+        ]);
+        return redirect('/exercises');
     }
 
     /**
@@ -79,10 +92,11 @@ class ExerciseController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Exercise  $exercise
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy(Exercise $exercise)
     {
-        //
+        Exercise::find($exercise->id)->delete();
+        return redirect('/exercises');
     }
 }
