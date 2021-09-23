@@ -27,9 +27,8 @@ class InsertStudentRequest extends FormRequest
             'degree' => 'max:10',
             'firstName' => 'string|required|max:100',
             'lastName' => 'string|required|max:100',
-            'credits' => 'required',
-            'birth' => 'required',
-            'enrollment' => 'required',
+            'birth' => 'required|date_format:Y-m-d|before:tomorrow',
+            'enrollment' => 'required|date_format:Y-m-d|before:tomorrow'
         ];
     }
 }

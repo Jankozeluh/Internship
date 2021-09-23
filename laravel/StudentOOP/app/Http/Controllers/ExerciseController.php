@@ -31,7 +31,7 @@ class ExerciseController extends Controller
      */
     public function create()
     {
-        return view('exercises.create')->with('teacher',Teacher::all())->with('group',Group::all())->with('subject',Subject::all());
+        return view('exercises.create')->with('group',Group::all())->with('subject',Subject::all());
     }
 
     /**

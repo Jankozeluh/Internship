@@ -18,8 +18,8 @@ class CreateStudentsTable extends Migration
             $table->string('degree')->nullable();
             $table->string('firstName');
             $table->string('lastName');
-            $table->string('birth');
-            $table->string('enrollment');
+            $table->date('birth');
+            $table->date('enrollment');
             $table->integer('credits');
         });
     }

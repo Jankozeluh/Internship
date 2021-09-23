@@ -28,10 +28,6 @@
                         <span class="input-group-text">Enrollment</span>
                         <input type="date" name="enrollment" class="form-control" value="{{$student->enrollment}}">
                     </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Credits</span>
-                        <input type="number" name="credits" class="form-control" value="{{$student->credits}}">
-                    </div>
                     <input type="submit" name="insert" class="btn btn-secondary" value="Edit this student" />
                 </form>
             </div>

@@ -16,10 +16,10 @@ class CreateLecturesTable extends Migration
         Schema::create('lectures', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('date');
-            $table->foreignId('subject_id',)->constrained()->onDelete('cascade');
-            $table->foreignId('teacher_id',)->constrained()->onDelete('cascade');
-            $table->foreignId('group_id',)->constrained()->onDelete('cascade');
+            $table->date('date');
+            $table->foreignId('subject_id')->constrained()->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreignId('teacher_id')->constrained()->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreignId('group_id')->constrained()->references('id')->on('groups')->onDelete('cascade');
         });
     }
 

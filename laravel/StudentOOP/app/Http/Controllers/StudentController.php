@@ -7,7 +7,6 @@ use App\Models\Group;
 use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -46,7 +45,7 @@ class StudentController extends Controller
             'degree' => $request->input('degree', null),
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
-            'credits' => (int)$request->input('credits'),
+            'credits' => 0,
             'birth' => $request->input('birth'),
             'enrollment' => $request->input('enrollment'),
         ]);
@@ -90,7 +89,7 @@ class StudentController extends Controller
             'degree' => $request->input('degree', null),
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
-            'credits' => (int)$request->input('credits'),
+            'credits' => $student->credits,
             'birth' => $request->input('birth'),
             'enrollment' => $request->input('enrollment'),
         ]);

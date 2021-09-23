@@ -25,7 +25,7 @@ class InsertLectureRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'date' => 'required',
+            'date' => 'required|date_format:Y-m-d|after:now',
             //'subject_id' => 'required',
             //'teacher_id' => 'required',
             //'group_id' => 'required',

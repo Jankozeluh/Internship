@@ -3,6 +3,16 @@
 @section('content')
     <div class="container" style="width: 50%">
         <div class="row">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <p style="text-align: center">{{ $error }}</p>
+                            {{header("Refresh:5")}}
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-sm">
                 <form action="/teachers" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf

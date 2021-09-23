@@ -27,7 +27,7 @@ class InsertTeacherRequest extends FormRequest
             'degree' => 'required|max:10',
             'firstName' => 'required|max:100',
             'lastName' => 'required|max:100',
-            'birth' => 'required',
+            'birth' => 'required|date_format:Y-m-d|before:tomorrow',
         ];
     }
 }

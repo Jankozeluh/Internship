@@ -18,9 +18,10 @@ class CreateSubjectsTable extends Migration
             $table->string('name');
             $table->string('credits');
             $table->string('semester');
-            $table->unsignedInteger('garant');
+            $table->foreignId('garant')->constrained()->references('id')->on('teachers')->onDelete('cascade');
 
-            $table->foreign('garant')->references('id')->on('teachers')->onDelete('cascade');
+            //$table->foreign('garant')->constrained()->references('id')->on('teachers')->onDelete('cascade');
+
         });
     }
 

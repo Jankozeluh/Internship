@@ -25,7 +25,7 @@ class InsertExerciseRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'date' => 'required',
+            'date' => 'required|date_format:Y-m-d|after:now',
             'pc' => 'required',
             //'subject_id' => 'required',
             //'teacher_id' => 'required',

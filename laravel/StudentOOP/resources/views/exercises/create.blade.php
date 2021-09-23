@@ -21,14 +21,17 @@
                         <select name="subject" required>
                             @foreach($subject as $item)
                                 <option value={{$item->id}}>{{$item->name}}</option>
+                                    @foreach($item->teachers ?? '' as $item)
+                                        <option value={{$item->id}}>{{$item->degree . " " . $item->firstName . " " . $item->lastName}}</option>
+                                    @endforeach
                             @endforeach
                         </select>
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Teacher</span>
                         <select name="teacher" required>
-                            @foreach($teacher as $item)
-                                <option value={{$item->id}}>{{$item->degree . " " . $item->firstName . " " . $item->lastName}}</option>
+                            @foreach($subject as $item)
+
                             @endforeach
                         </select>
                     </div>
@@ -52,5 +55,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('[name="subject"]').on('change',function() {
+            if($(this).val() !== '') {
+                $('[name="teacher"] option').hide();
+                $('[name="teacher"] option[subject="'+$(this).val()+'"]').show();
+            } else {
+                $('[name="teacher"] option').show();
+            }
+        });
+    </script>
 @endsection
 
