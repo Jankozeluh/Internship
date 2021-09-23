@@ -142,7 +142,7 @@
                             <td>{{$exe['name']}}</td>
                             <td>{{$exe['date']}}</td>
                             <td>{{$exe->subject->name}}</td>
-                            <td>{{$exe->teacher->degree.' '.$lec->teacher->firstName.' '.$lec->teacher->lastName}}</td>
+                            <td>{{$exe->teacher->degree.' '.$exe->teacher->firstName.' '.$exe->teacher->lastName}}</td>
                             <td>{{$exe->group->code}}</td>
                             <td>{{$exe->pc}}</td>
                         </tr>

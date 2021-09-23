@@ -18,7 +18,8 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Subject</span>
-                        <select name="subject" required>
+                        <select class="form-control formselect required" placeholder="Select subject" id="subject" name="subject" required>
+                            <option disabled selected>Select subject</option>
                             @foreach($subject as $item)
                                 <option value={{$item->id}}>{{$item->name}}</option>
                             @endforeach
@@ -26,10 +27,8 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Teacher</span>
-                        <select name="teacher" required>
-                            @foreach($teacher as $item)
-                                <option value={{$item->id}}>{{$item->degree . " " . $item->firstName . " " . $item->lastName}}</option>
-                            @endforeach
+                        <select class="form-control formselect required" placeholder="Select Teacher" id="teacher" name="teacher" required>
+
                         </select>
                     </div>
                     <div class="input-group input-group-sm mb-3">
@@ -52,4 +51,26 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#subject').on('input', function () {
+                let id = $(this).val();
+                $('#teacher').empty();
+                $('#teacher').append(`<option disabled selected>Processing...</option>`);
+                $.ajax({
+                    type: 'GET',
+                    url: '../getTeachers/' + id,
+                    success: function (response) {
+                        var response = JSON.parse(response);
+                        console.log(response);
+                        $('#teacher').empty();
+                        $('#teacher').append(`<option value="0" disabled selected>Select teacher</option>`);
+                        response.forEach(element => {
+                            $('#teacher').append(`<option value="${element['id']}">${element['degree']}${element['firstName']}${element['lastName']}</option>`);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

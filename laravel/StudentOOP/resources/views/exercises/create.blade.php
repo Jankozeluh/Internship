@@ -3,6 +3,16 @@
 @section('content')
     <div class="container" style="width: 50%">
         <div class="row">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <p style="text-align: center">{{ $error }}</p>
+                            {{header("Refresh:5")}}
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-sm">
                 <form action="/exercises" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
@@ -18,21 +28,17 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Subject</span>
-                        <select name="subject" required>
+                        <select class="form-control formselect required" placeholder="Select subject" id="subject" name="subject" required>
+                            <option disabled selected>Select subject</option>
                             @foreach($subject as $item)
                                 <option value={{$item->id}}>{{$item->name}}</option>
-                                    @foreach($item->teachers ?? '' as $item)
-                                        <option value={{$item->id}}>{{$item->degree . " " . $item->firstName . " " . $item->lastName}}</option>
-                                    @endforeach
                             @endforeach
                         </select>
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Teacher</span>
-                        <select name="teacher" required>
-                            @foreach($subject as $item)
+                        <select class="form-control formselect required" placeholder="Select Teacher" id="teacher" name="teacher" required>
 
-                            @endforeach
                         </select>
                     </div>
                     <div class="input-group input-group-sm mb-3">
@@ -57,13 +63,25 @@
     </div>
 
     <script>
-        $('[name="subject"]').on('change',function() {
-            if($(this).val() !== '') {
-                $('[name="teacher"] option').hide();
-                $('[name="teacher"] option[subject="'+$(this).val()+'"]').show();
-            } else {
-                $('[name="teacher"] option').show();
-            }
+        $(document).ready(function () {
+            $('#subject').on('input', function () {
+                let id = $(this).val();
+                $('#teacher').empty();
+                $('#teacher').append(`<option disabled selected>Processing...</option>`);
+                $.ajax({
+                    type: 'GET',
+                    url: 'getTeachers/' + id,
+                    success: function (response) {
+                        var response = JSON.parse(response);
+                        console.log(response);
+                        $('#teacher').empty();
+                        $('#teacher').append(`<option value="0" disabled selected>Select teacher</option>`);
+                        response.forEach(element => {
+                            $('#teacher').append(`<option value="${element['id']}">${element['degree']}${element['firstName']}${element['lastName']}</option>`);
+                        });
+                    }
+                });
+            });
         });
     </script>
 @endsection

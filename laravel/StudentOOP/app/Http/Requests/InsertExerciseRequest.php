@@ -27,9 +27,9 @@ class InsertExerciseRequest extends FormRequest
             'name' => 'required',
             'date' => 'required|date_format:Y-m-d|after:now',
             'pc' => 'required',
-            //'subject_id' => 'required',
-            //'teacher_id' => 'required',
-            //'group_id' => 'required',
+            'subject_id' => 'exists:subjects,id',
+            'teacher_id' => 'exists:teachers,id', 
+            'group_id' => 'exists:groups,id',
         ];
     }
 }

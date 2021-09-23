@@ -106,4 +106,11 @@ class LectureController extends Controller
         Lecture::find($lecture->id)->delete();
         return redirect('/lectures');
     }
+
+    /**
+     * Get teachers for selected subject in the form.
+     * */
+    public function getTeachers($id){
+        return json_encode(Subject::find($id)->teachers);
+    }
 }

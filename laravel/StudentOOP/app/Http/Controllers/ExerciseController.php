@@ -9,6 +9,7 @@ use App\Models\Lecture;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExerciseController extends Controller
 {
@@ -107,5 +108,12 @@ class ExerciseController extends Controller
     {
         Exercise::find($exercise->id)->delete();
         return redirect('/exercises');
+    }
+
+    /**
+     * Get teachers for selected subject in the form.
+     * */
+    public function getTeachers($id){
+        return json_encode(Subject::find($id)->teachers);
     }
 }

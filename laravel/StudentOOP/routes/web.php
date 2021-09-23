@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers;
+use App\Http\Controllers\ExerciseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('exercises/getTeachers/{id}',[Controllers\ExerciseController::class, 'getTeachers'])->name('getTeachers');
+Route::get('lectures/getTeachers/{id}',[Controllers\LectureController::class, 'getTeachers'])->name('getTeachers');
+
+
 Route::get('/',[Controllers\HomeController::class,'index']);
 
 Route::prefix('students')->group(function () {
-
     Route::post('{student}/leave', [Controllers\StudentController::class,'leave']);
     Route::post('{student}/delete/subject', [Controllers\StudentController::class,'deleteSubject']);
     Route::post('{student}/add/subject/submit', [Controllers\StudentController::class,'addSubject']);
@@ -31,7 +35,10 @@ Route::resource('/students', Controllers\StudentController::class);
 Route::prefix('subjects')->group(function () {
     Route::post('{subject}/delete/teacher', [Controllers\SubjectController::class,'deleteTeacher']);
     Route::post('{subject}/add/teacher/submit', [Controllers\SubjectController::class,'addTeacher']);
+    Route::post('{subject}/end/submit', [Controllers\SubjectController::class,'end']);
+
     Route::get('{subject}/add/teacher', [Controllers\SubjectController::class,'teacher']);
+    Route::get('{subject}/end', [Controllers\SubjectController::class,'preEnd']);
 });
 Route::resource('/subjects', Controllers\SubjectController::class);
 

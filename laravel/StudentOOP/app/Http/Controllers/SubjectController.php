@@ -139,4 +139,14 @@ class SubjectController extends Controller
         Subject::find($subject->id)->teachers()->detach($request->teacherId);
         return redirect('/subjects');
     }
+
+    /**
+     * Show avaiable teachers for the subject.
+     *
+     * @param  \App\Models\Subject  $subject
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function preEnd(Subject $subject){
+        return view('subjects.end')->with('subject',Subject::find($subject->id));
+    }
 }
