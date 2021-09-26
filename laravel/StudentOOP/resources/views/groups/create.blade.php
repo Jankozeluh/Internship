@@ -13,10 +13,26 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Semester</span>
-                        <input type="number" name="semester" class="form-control" required>
+                        <select name="semester" class="form-control" required>
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                        </select>
                     </div>
+
+                    <h4 style="text-align: center">Subjects</h4>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="form-check form-switch" style="margin: auto">
+                            @foreach($subject as $item)
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                       name="subject" value={{$item->id}}>
+                                <label class="form-check-label" for="flexSwitchCheckDefault">{{$item->name}}</label>
+                                <br>
+                            @endforeach
+                        </div>
+                    </div>
+
                     <br>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new group" />
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new group"/>
                 </form>
             </div>
         </div>

@@ -16,7 +16,6 @@ class CreateStuGroupTable extends Migration
         Schema::create('stu_group', function (Blueprint $table) {
             $table->foreignId('group_id',)->constrained()->references('id')->on('groups')->onDelete('cascade');
             $table->foreignId('student_id')->constrained()->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('semester')->references('semester')->on('groups')->onDelete('cascade');
         });
     }
 

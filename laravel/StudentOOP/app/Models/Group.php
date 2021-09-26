@@ -26,4 +26,8 @@ class Group extends Model
     public function exercises(){
         return $this->hasMany(Exercise::class,'group_id','id');
     }
+
+    public function subjects(){
+        return $this->belongsToMany(Subject::class,'sub_group','group_id','subject_id');
+    }
 }

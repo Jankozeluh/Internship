@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InsertExerciseRequest;
 use App\Models\Exercise;
 use App\Models\Group;
-use App\Models\Lecture;
 use App\Models\Subject;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ExerciseController extends Controller
 {
@@ -21,7 +18,7 @@ class ExerciseController extends Controller
     public function index()
     {
         return view('exercises.index',[
-            'exercise'=>Exercise::all()
+            'exercise'=>Exercise::sortable()->paginate(10)
         ]);
     }
 

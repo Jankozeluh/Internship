@@ -19,9 +19,6 @@ class CreateSubjectsTable extends Migration
             $table->string('credits');
             $table->string('semester');
             $table->foreignId('garant')->constrained()->references('id')->on('teachers')->onDelete('cascade');
-
-            //$table->foreign('garant')->constrained()->references('id')->on('teachers')->onDelete('cascade');
-
         });
     }
 
