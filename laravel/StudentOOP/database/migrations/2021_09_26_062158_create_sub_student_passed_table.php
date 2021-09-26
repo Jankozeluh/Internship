@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStuGroupTable extends Migration
+class CreateSubStudentPassedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateStuGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('stu_group', function (Blueprint $table) {
-            $table->foreignId('group_id',)->constrained()->references('id')->on('groups')->onDelete('cascade');
+        Schema::create('sub_student_passed', function (Blueprint $table) {
+            $table->foreignId('subject_id',)->constrained()->references('id')->on('subjects');
             $table->foreignId('student_id')->constrained()->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('semester')->references('semester')->on('groups')->onDelete('cascade');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateStuGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stu_group');
+        Schema::dropIfExists('sub_student_passed');
     }
 }

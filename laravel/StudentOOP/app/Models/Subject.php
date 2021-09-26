@@ -34,4 +34,9 @@ class Subject extends Model
     public function exercises(){
         return $this->hasMany(Exercise::class,'subject_id','id');
     }
+
+    //?
+    public function prerequisites(){
+        return $this->hasMany(Subject::class,'subject_id','id');
+    }
 }

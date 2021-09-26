@@ -18,8 +18,8 @@ class LectureController extends Controller
      */
     public function index()
     {
-        return view('lectures.index',[
-            'lecture'=>Lecture::all()
+        return view('lectures.index', [
+            'lecture' => Lecture::all()
         ]);
     }
 
@@ -30,13 +30,13 @@ class LectureController extends Controller
      */
     public function create()
     {
-        return view('lectures.create')->with('teacher',Teacher::all())->with('group',Group::all())->with('subject',Subject::all());
+        return view('lectures.create')->with('teacher', Teacher::all())->with('group', Group::all())->with('subject', Subject::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(InsertLectureRequest $request)
@@ -56,7 +56,7 @@ class LectureController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Lecture  $lecture
+     * @param \App\Models\Lecture $lecture
      * @return \Illuminate\Http\Response
      */
     public function show(Lecture $lecture)
@@ -67,25 +67,25 @@ class LectureController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Lecture  $lecture
+     * @param \App\Models\Lecture $lecture
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Lecture $lecture)
     {
-        return view('lectures.edit')->with('lecture',Lecture::find($lecture->id))->with('subject',Subject::all())->with('teacher',Teacher::all())->with('group',Group::all());
+        return view('lectures.edit')->with('lecture', Lecture::find($lecture->id))->with('subject', Subject::all())->with('teacher', Teacher::all())->with('group', Group::all());
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Lecture  $lecture
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Lecture $lecture
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(InsertLectureRequest $request, Lecture $lecture)
     {
         $request->validated();
-        Lecture::where('id',$lecture->id)->update([
+        Lecture::where('id', $lecture->id)->update([
             'name' => $request->input('name'),
             'date' => $request->input('date'),
             'subject_id' => $request->input('subject'),
@@ -98,7 +98,7 @@ class LectureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Lecture  $lecture
+     * @param \App\Models\Lecture $lecture
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy(Lecture $lecture)
@@ -110,7 +110,8 @@ class LectureController extends Controller
     /**
      * Get teachers for selected subject in the form.
      * */
-    public function getTeachers($id){
+    public function getTeachers($id)
+    {
         return json_encode(Subject::find($id)->teachers);
     }
 }
