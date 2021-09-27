@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InsertLectureRequest;
+use App\Http\Requests\InsertScheduleInqRequest;
+use App\Models\Exercise;
 use App\Models\Group;
 use App\Models\Lecture;
+use App\Models\Schedule;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
-class LectureController extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +21,9 @@ class LectureController extends Controller
      */
     public function index()
     {
-        return view('lectures.index', [
-            'lecture' => Lecture::all()
+        return view('schedule_inquiries.index', [
+            'lecture' => Schedule::all()->whereNull('pc'),
+            'exercise' => Schedule::all()->whereNotNull('pc'),
         ]);
     }
 
@@ -30,7 +34,7 @@ class LectureController extends Controller
      */
     public function create()
     {
-        return view('lectures.create')->with('teacher', Teacher::all())->with('group', Group::all())->with('subject', Subject::all());
+        return view('schedule_inquiries.create')->with('teacher', Teacher::all())->with('group', Group::all())->with('subject', Subject::all());
     }
 
     /**
@@ -39,27 +43,26 @@ class LectureController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function store(InsertLectureRequest $request)
+    public function store(InsertScheduleInqRequest $request)
     {
-        //{{--                'name','date','subject_id','teacher_id','group_id'--}}
-        $request->validated();
-        Lecture::create([
+        Schedule::create([
             'name' => $request->input('name'),
             'date' => $request->input('date'),
+            'pc' => $request->input('pc'),
             'subject_id' => $request->input('subject'),
             'teacher_id' => $request->input('teacher'),
             'group_id' => $request->input('group'),
         ]);
-        return redirect('/lectures');
+        return redirect('/schd_inq');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Lecture $lecture
+     * @param Schedule $schedule
      * @return \Illuminate\Http\Response
      */
-    public function show(Lecture $lecture)
+    public function show(Schedule $schedule)
     {
         //
     }
@@ -67,49 +70,48 @@ class LectureController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Lecture $lecture
+     * @param Schedule $schedule
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(Lecture $lecture)
+    public function edit($schedule)
     {
-        return view('lectures.edit')->with('lecture', Lecture::find($lecture->id))->with('subject', Subject::all())->with('teacher', Teacher::all())->with('group', Group::all());
+        return view('schedule_inquiries.edit')->with('schedule', Schedule::find($schedule))->with('subject', Subject::all())->with('teacher', Teacher::all())->with('group', Group::all());
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Lecture $lecture
+     * @param Schedule $schedule
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(InsertLectureRequest $request, Lecture $lecture)
+    public function update(InsertScheduleInqRequest $request, $schedule)
     {
         $request->validated();
-        Lecture::where('id', $lecture->id)->update([
+        $pc = Schedule::find($schedule)->pc;
+        Schedule::where('id', $schedule)->update([
             'name' => $request->input('name'),
             'date' => $request->input('date'),
+            'pc' => $request->input('pc'),
             'subject_id' => $request->input('subject'),
             'teacher_id' => $request->input('teacher'),
             'group_id' => $request->input('group'),
         ]);
-        return redirect('/lectures');
+        return redirect('/schd_inq');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Lecture $lecture
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy(Lecture $lecture)
+    public function destroy($schedule)
     {
-        Lecture::find($lecture->id)->delete();
-        return redirect('/lectures');
+        Schedule::find($schedule)->delete();
+        return redirect('/schd_inq');
     }
 
-    /**
-     * Get teachers for selected subject in the form.
-     * */
     public function getTeachers($id)
     {
         return json_encode(Subject::find($id)->teachers);

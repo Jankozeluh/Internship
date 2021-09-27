@@ -184,6 +184,13 @@ class StudentController extends Controller
     public function addGroup(Request $request, Student $student)
     {
         Student::find($student->id)->groups()->attach($request->group);
+
+        foreach ($student->groups as $group) {
+            foreach ($group->subjects as $sub) {
+                Student::find($student->id)->subjects()->attach($sub->id);
+            }
+        }
+
         return redirect('/students');
     }
 }

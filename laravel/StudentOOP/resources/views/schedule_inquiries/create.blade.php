@@ -14,10 +14,15 @@
                 </div>
             @endif
             <div class="col-sm">
-                <form action="/exercises" method="POST" class="px-4 py-3" style="text-align: center">
+                <form action="/schd_inq" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
 {{--                'name','date','subject_id','teacher_id','group_id'--}}
-                    <h4 style="text-align: center">INSERT</h4>
+                    <h4 style="text-align: center" id="nmm">INSERT LECTURE</h4>
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="form-check form-switch" style="margin: auto">
+                            <input  class="form-check-input" type="checkbox" name="pcc" id="pcc">
+                        </div>
+                    </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Name</span>
                         <input type="text" name="name" class="form-control" required>
@@ -37,26 +42,23 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Teacher</span>
-                        <select class="form-control formselect required" placeholder="Select Teacher" id="teacher" name="teacher" required>
-
+                            <select class="form-control formselect required" placeholder="Select Teacher" id="teacher" name="teacher" required>
                         </select>
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Group</span>
-                        <select name="group" required>
+                        <select name="group" class="form-control" required>
                             @foreach($group as $item)
                                 <option value={{$item->id}}>{{$item->code}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">PC</span>
-                        <select name="pc" required>
-                                <option value='Yes'>Yes</option>
-                                <option value='No'>No</option>
+                        <span class="input-group-text" id="pcspan" style="display:none;">PC</span>
+                        <select name="pc" class="form-control" id="pc" style="display:none;">
                         </select>
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new exercise" />
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit" />
                 </form>
             </div>
         </div>
@@ -64,6 +66,29 @@
 
     <script>
         $(document).ready(function () {
+            $(document).on('click', '#pcc', function() {
+                if ($('#pcc').is(':checked')) {
+                    $('.single-item').prop('checked', true);
+                    $('#nmm').empty();
+                    $('#nmm').append('INSERT EXERCISE');
+
+                    $('#pc').append(`<option value='Yes'>Yes</option>`);
+                    $('#pc').append(`<option value='No'>No</option>`);
+                    $('#pc').show();
+                    $('#pcspan').show();
+
+                } else {
+                    $('.single-item').prop('checked', false);
+                    $('#pc').empty();
+
+                    $('#pc').hide();
+                    $('#pcspan').hide();
+
+                    $('#nmm').empty();
+                    $('#nmm').append('INSERT LECTURE');
+                }
+            });
+
             $('#subject').on('input', function () {
                 let id = $(this).val();
                 $('#teacher').empty();

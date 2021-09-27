@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InsertExerciseRequest extends FormRequest
+class InsertScheduleInqRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,6 @@ class InsertExerciseRequest extends FormRequest
         return [
             'name' => 'required',
             'date' => 'required|date_format:Y-m-d|after:now',
-            'pc' => 'required',
             'subject' => 'required|exists:subjects,id',
             'teacher' => 'required|exists:teachers,id',
             'group' => 'required|exists:groups,id',

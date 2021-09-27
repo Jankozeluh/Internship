@@ -99,7 +99,7 @@
         <div class="row">
             <div class="col-sm" style="text-align: center;padding-top: 2%">
                 <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                    <a href="{{ url('/lectures') }}"><h4>Lectures</h4></a>
+                    <a href="{{ url('/schd_inq') }}"><h4>Lectures</h4></a>
                     <thead>
                     <tr>
                         <th scope="row">#</th>
@@ -124,7 +124,7 @@
             </div>
             <div class="col-sm" style="text-align: center;padding-top: 2%">
                 <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                    <a href="{{ url('/exercises') }}"><h4>Exercises</h4></a>
+                    <a href="{{ url('/schd_inq') }}"><h4>Exercises</h4></a>
                     <thead>
                     <tr>
                         <th scope="row">#</th>

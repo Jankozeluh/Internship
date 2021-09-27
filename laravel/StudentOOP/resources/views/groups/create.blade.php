@@ -3,6 +3,17 @@
 @section('content')
     <div class="container" style="width: 50%">
         <div class="row">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <p style="text-align: center">{{ $error }}</p>
+                            {{header("Refresh:5")}}
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="col-sm">
                 <form action="/groups" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
@@ -24,13 +35,12 @@
                         <div class="form-check form-switch" style="margin: auto">
                             @foreach($subject as $item)
                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
-                                       name="subject" value={{$item->id}}>
+                                       name="subject[]" value={{$item->id}}>
                                 <label class="form-check-label" for="flexSwitchCheckDefault">{{$item->name}}</label>
                                 <br>
                             @endforeach
                         </div>
                     </div>
-
                     <br>
                     <input type="submit" name="insert" class="btn btn-secondary" value="Submit new group"/>
                 </form>

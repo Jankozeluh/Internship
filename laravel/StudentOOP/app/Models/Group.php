@@ -20,11 +20,11 @@ class Group extends Model
     }
 
     public function lectures(){
-        return $this->hasMany(Lecture::class,'group_id','id');
+        return $this->hasMany(Schedule::class,'group_id','id')->whereNull('pc');
     }
 
     public function exercises(){
-        return $this->hasMany(Exercise::class,'group_id','id');
+        return $this->hasMany(Schedule::class,'group_id','id')->whereNotNull('pc');
     }
 
     public function subjects(){

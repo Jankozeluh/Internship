@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
@@ -51,6 +52,14 @@ class GroupController extends Controller
             'code' => $request->input('code'),
             'semester' => $request->input('semester'),
         ]);
+
+        $id = Group::where('code', $request->input('code'))->first();
+
+        $subjects = $request->input('subject');
+        foreach ($subjects as $subject) {
+            $id->subjects()->attach($subject);
+        }
+
         return redirect('/groups');
     }
 
@@ -111,7 +120,7 @@ class GroupController extends Controller
      * @param Group $group
      * @return Application
      */
-    public function student(Group $group): Application
+    public function student(Group $group): View
     {
         $students = Student::doesntHave('groups')->get();
         return view('groups.add.student')->with('group', Group::find($group->id))->with('student', $students);
@@ -127,6 +136,10 @@ class GroupController extends Controller
     public function addStudent(Request $request, Group $group)
     {
         Group::find($group->id)->students()->attach($request->student);
+        foreach ($group->subjects as $subject) {
+            Student::find($group->students()->first()->id)->subjects()->attach($subject->id);
+        }
+
         return redirect('/groups');
     }
 

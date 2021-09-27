@@ -28,15 +28,15 @@ class Subject extends Model
     }
 
     public function lectures(){
-        return $this->hasMany(Lecture::class,'subject_id','id');
+        return $this->hasMany(Schedule::class,'subject_id','id')->whereNull('pc');
     }
 
     public function exercises(){
-        return $this->hasMany(Exercise::class,'subject_id','id');
+        return $this->hasMany(Schedule::class,'subject_id','id')->whereNotNull('pc');
     }
 
     //?
     public function prerequisites(){
-        return $this->hasMany(Subject::class,'subject_id','id');
+        return $this->belongsToMany(Subject::class,'prerequisites','owner','prereq');
     }
 }

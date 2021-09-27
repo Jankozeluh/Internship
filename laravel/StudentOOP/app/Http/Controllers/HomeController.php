@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Models\Group;
 use App\Models\Lecture;
+use App\Models\Schedule;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Subject;
@@ -25,8 +26,8 @@ class HomeController extends Controller
             'student' => Student::paginate(5),
             'teacher' => Teacher::paginate(5),
             'group' => Group::paginate(5),
-            'lecture' => Lecture::paginate(5),
-            'exercise' => Exercise::paginate(5)
+            'lecture' => Schedule::paginate(5)->whereNull('pc'),
+            'exercise' => Schedule::paginate(5)->whereNotNull('pc'),
         ]);
     }
 }

@@ -20,10 +20,10 @@ class Teacher extends Model
     }
 
     public function lectures(){
-        return $this->hasMany(Lecture::class,'teacher_id','id');
+        return $this->hasMany(Schedule::class,'teacher_id','id')->whereNull('pc');
     }
 
     public function exercises(){
-        return $this->hasMany(Exercise::class,'teacher_id','id');
+        return $this->hasMany(Schedule::class,'teacher_id','id')->whereNotNull('pc');
     }
 }
