@@ -38,6 +38,7 @@ Route::prefix('subjects')->group(function () {
 
     Route::get('{subject}/add/teacher', [Controllers\SubjectController::class,'teacher']);
     Route::get('{subject}/end', [Controllers\SubjectController::class,'preEnd']);
+
 });
 Route::resource('/subjects', Controllers\SubjectController::class);
 
@@ -50,6 +51,10 @@ Route::resource('/teachers', Controllers\TeacherController::class);
 
 Route::resource('/groups', Controllers\GroupController::class);
 Route::prefix('groups')->group(function () {
+    Route::post('{group}/add/subject/submit', [Controllers\GroupController::class,'addSubject']);
+    Route::get('{group}/add/subject', [Controllers\GroupController::class,'subject']);
+
+
     Route::post('{group}/delete/student', [Controllers\GroupController::class,'deleteStudent']);
     Route::post('{group}/add/student/submit', [Controllers\GroupController::class,'addStudent']);
     Route::get('{group}/add/student', [Controllers\GroupController::class,'student']);

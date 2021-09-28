@@ -14,7 +14,7 @@ class CreateSubStudentPassedTable extends Migration
     public function up()
     {
         Schema::create('sub_student_passed', function (Blueprint $table) {
-            $table->foreignId('subject_id',)->constrained()->references('id')->on('subjects');
+            $table->unsignedBigInteger('subject_id');
             $table->foreignId('student_id')->constrained()->references('id')->on('students')->onDelete('cascade');
         });
     }

@@ -35,6 +35,10 @@ class Subject extends Model
         return $this->hasMany(Schedule::class,'subject_id','id')->whereNotNull('pc');
     }
 
+    public function groups(){
+        return $this->belongsToMany(Group::class,'sub_group','subject_id','group_id');
+    }
+
     //?
     public function prerequisites(){
         return $this->belongsToMany(Subject::class,'prerequisites','owner','prereq');

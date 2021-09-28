@@ -21,7 +21,6 @@
                     <thead>
                     <tr>
                         <th scope="row">@sortablelink('id')</th>
-{{--                        <th>@sortablelink('groups.code', 'code')</th>--}}
                         <th>Group</th>
                         <th>Name</th>
                         <th>@sortablelink('birth')</th>

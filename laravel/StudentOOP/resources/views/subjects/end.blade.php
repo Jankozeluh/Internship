@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','Create')
+@section('title','End')
 @section('content')
     <div class="container" style="width: 50%">
         <div class="row">
@@ -14,17 +14,28 @@
                 </div>
             @endif
             <div class="col-sm">
-                <form action="/subjects/end/submit" method="POST" class="px-4 py-3" style="text-align: center">
+                <form action="/subjects/{{$subject->id}}/end/submit" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
-                    <h4 style="text-align: center">END {{$subject->name}}</h4>
+                    <h4 style="text-align: center">{{$subject->name}}</h4>
                     <div class="input-group input-group-sm mb-3">
-{{--                        <h4 class="input-group-text">Students</h4>--}}
-                        @foreach($subject->students as $item)
-                            <h5>{{$item->degree}}{{$item->firstName}}{{$item->lastName}}</h5>
-                            <input type="checkbox" id="{{$item->id}}" value="{{$item->id}}">
-                        @endforeach
+                        <div style="margin: auto">
+                            @foreach($subject->students as $item)
+                                <label for="id">{{$item->degree.$item->firstName.$item->lastName}}</label>
+                                <select class="form-select form-select-sm" name={{$item->id}} id="st">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                {{--                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"--}}
+                                {{--                                       name="student[]" value={{$item->id}}>--}}
+                                {{--                                <label class="form-check-label" for="flexSwitchCheckDefault">{{$item->degree.$item->firstName.$item->lastName}}</label>--}}
+                                <br>
+                            @endforeach
+                        </div>
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new subject" />
+                    <input type="submit" class="btn btn-secondary" value="End this subject"/>
                 </form>
             </div>
         </div>

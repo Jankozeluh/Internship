@@ -6,6 +6,7 @@ use App\Http\Requests\InsertGroupRequest;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -110,6 +111,11 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
+        foreach ($group->subjects as $subject) {
+            foreach ($group->students as $student) {
+                Student::find($student->id)->subjects()->detach($subject->id);
+            }
+        }
         Group::find($group->id)->delete();
         return redirect('/groups');
     }
@@ -137,11 +143,56 @@ class GroupController extends Controller
     {
         Group::find($group->id)->students()->attach($request->student);
         foreach ($group->subjects as $subject) {
-            Student::find($group->students()->first()->id)->subjects()->attach($subject->id);
+            foreach ($group->students as $student) {
+                if($student->id==$request->student) {
+                    Student::find($student->id)->subjects()->attach($subject->id);
+                }
+            }
         }
+        return redirect('/groups');
+    }
+
+    /**
+     * Show selector of available subjects for the group.
+     *
+     * @param \App\Models\Group $group
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function subject(Group $group)
+    {
+        $subject = Subject::whereDoesntHave('groups', function ($query) use ($group) {
+            $query->where('group_id', $group->id);
+        })->get();
+        return view('groups.add.subject')->with('group', Group::find($group->id))->with('subject', $subject);
+    }
+
+    /**
+     * Add a subject for group.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Group $group
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function addSubject(Request $request, Group $group)
+    {
+        foreach ($group->students as $student) {
+            if(!($student->subjects->isEmpty())) {
+                foreach ($student->subjects as $sub) {
+                    if ($sub->id != $request->subject) {
+                        Student::find($student->id)->subjects()->attach($request->subject);
+                    }
+                }
+            }
+            else{
+                Student::find($student->id)->subjects()->attach($request->subject);
+            }
+        }
+
+        Group::find($group->id)->subjects()->attach($request->subject);
 
         return redirect('/groups');
     }
+
 
     /*
       stu_group

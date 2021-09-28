@@ -55,11 +55,13 @@ class SubjectController extends Controller
             'semester' => (int)$request->input('semester'),
             'garant' => (int)$request->input('garant')])->first();
 
+        //ddd($id);
         $subjects = $request->input('subject');
-        foreach ($subjects as $subject) {
-            $id->prerequisites()->attach($subject);
+        if ($subjects != null) {
+            foreach ($subjects as $subject) {
+                $id->prerequisites()->attach($subject);
+            }
         }
-
 
         return redirect('/subjects');
     }
@@ -166,5 +168,26 @@ class SubjectController extends Controller
     public function preEnd(Subject $subject)
     {
         return view('subjects.end')->with('subject', Subject::find($subject->id));
+    }
+
+    /**
+     *
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Subject $subject
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function end(Request $request, Subject $subject)
+    {
+        //ddd($request[2]);
+        foreach ($subject->students as $ssubject) {
+            $id = $ssubject->id;
+            if ($request[$id] >= 1 && $request[$id] <= 4) {
+                Student::find($id)->increment('credits',$subject->credits);
+                Student::find($id)->passed_subjects()->attach($subject->id);
+            }
+        }
+        Subject::find($subject->id)->delete();
+        return redirect('/subjects');
     }
 }

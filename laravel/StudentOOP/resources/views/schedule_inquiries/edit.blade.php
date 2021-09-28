@@ -17,7 +17,6 @@
                 <form action="/schd_inq/{{$schedule->id}}" method="POST" class="px-4 py-3" style="text-align: center">
                     @csrf
                     @method('PUT')
-                    {{--                'name','date','subject_id','teacher_id','group_id'--}}
                     <h4 style="text-align: center" id="nmm">EDIT LECTURE</h4>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Name</span>
