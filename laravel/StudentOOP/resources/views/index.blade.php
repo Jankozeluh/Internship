@@ -174,7 +174,7 @@
                             <td>{{$grp['semester']}}</td>
                             <td>
                                 @foreach($grp->students as $item)
-                                    {{$item->firstName." ".$item->lastName}}<br>
+                                    {{$item->degree." ".$item->firstName." ".$item->lastName}}<br>
                                 @endforeach
                             </td>
                             <td>

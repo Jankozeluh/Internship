@@ -59,7 +59,8 @@ class SubjectController extends Controller
         $subjects = $request->input('subject');
         if ($subjects != null) {
             foreach ($subjects as $subject) {
-                $id->prerequisites()->attach($subject);
+                $id->prereq()->attach($subject,['title'=>Subject::find($subject)->name]);
+                //DB::table('prerequisites')->where('id','=',$subject)->a;
             }
         }
 

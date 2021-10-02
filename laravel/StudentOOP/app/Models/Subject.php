@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
 
 class Subject extends Model
@@ -39,8 +40,7 @@ class Subject extends Model
         return $this->belongsToMany(Group::class,'sub_group','subject_id','group_id');
     }
 
-    //?
-    public function prerequisites(){
-        return $this->belongsToMany(Subject::class,'prerequisites','owner','prereq');
+    public function prereq(){
+        return $this->belongsToMany(Subject::class,'prerequisites','owner','prereq')->withPivot(['title']);
     }
 }

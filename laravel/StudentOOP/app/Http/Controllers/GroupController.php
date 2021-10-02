@@ -141,13 +141,39 @@ class GroupController extends Controller
      */
     public function addStudent(Request $request, Group $group)
     {
-        Group::find($group->id)->students()->attach($request->student);
-        foreach ($group->subjects as $subject) {
-            foreach ($group->students as $student) {
-                if($student->id==$request->student) {
-                    Student::find($student->id)->subjects()->attach($subject->id);
+        try {
+            Group::find($group->id)->students()->attach($request->student);
+            foreach ($group->subjects as $subject) {
+                foreach ($group->students as $student) {
+                    if ($student->id == $request->student) {
+                        if (($subject->prereq) != null) {
+                            foreach ($subject->prereq as $prereq) {
+                                if ($student->passed != null) {
+                                    foreach ($student->passed as $passed) {
+                                        if ($prereq->prereq == $passed->subject_id) {
+                                            $p11 = true;
+                                            Student::find($student->id)->subjects()->attach($subject->id);
+                                        }
+                                    }
+                                    if(!(isset($p11))){
+                                        throw new \Exception("Student did not finish needed prerequisites of subjects which has the group he wants to enroll.");
+                                    }
+                                } else {
+                                    Group::find($group->id)->students()->detach($request->student);
+                                    throw new \Exception("Student did not finish any subjects, so it cannot have passed prerequisites of the subject");
+                                }
+                            }
+                        } else {
+                            Student::find($student->id)->subjects()->attach($subject->id);
+                        }
+                    } else {
+                        Group::find($group->id)->students()->detach($request->student);
+                        throw new \Exception("Request was probably modified, this student is not in database.");
+                    }
                 }
             }
+        } catch (\Exception $e) {
+            return redirect('/groups')->withErrors(json_encode($e));
         }
         return redirect('/groups');
     }
@@ -176,14 +202,13 @@ class GroupController extends Controller
     public function addSubject(Request $request, Group $group)
     {
         foreach ($group->students as $student) {
-            if(!($student->subjects->isEmpty())) {
+            if (!($student->subjects->isEmpty())) {
                 foreach ($student->subjects as $sub) {
                     if ($sub->id != $request->subject) {
                         Student::find($student->id)->subjects()->attach($request->subject);
                     }
                 }
-            }
-            else{
+            } else {
                 Student::find($student->id)->subjects()->attach($request->subject);
             }
         }

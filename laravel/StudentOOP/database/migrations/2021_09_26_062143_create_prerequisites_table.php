@@ -14,8 +14,9 @@ class CreatePrerequisitesTable extends Migration
     public function up()
     {
         Schema::create('prerequisites', function (Blueprint $table) {
-            $table->foreignId('owner',)->constrained()->references('id')->on('subjects')->onDelete('cascade');
-            $table->foreignId('prereq')->constrained()->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreignId('owner')->constrained()->references('id')->on('subjects')->onDelete('cascade');
+            $table->unsignedBigInteger('prereq');
+            $table->string('title');
         });
     }
 
