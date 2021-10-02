@@ -20,8 +20,8 @@ Route::get('schd_inq/getTeachers/{id}',[Controllers\ScheduleController::class, '
 //Route::get('exercises/getTeachers/{id}',[Controllers\ExerciseController::class, 'getTeachers'])->name('getTeachers');
 //Route::get('lectures/getTeachers/{id}',[Controllers\LectureController::class, 'getTeachers'])->name('getTeachers');
 
-
 Route::get('/',[Controllers\HomeController::class,'index']);
+
 
 Route::prefix('students')->group(function () {
     Route::post('{student}/leave', [Controllers\StudentController::class,'leave']);
@@ -35,9 +35,11 @@ Route::prefix('subjects')->group(function () {
     Route::post('{subject}/delete/teacher', [Controllers\SubjectController::class,'deleteTeacher']);
     Route::post('{subject}/add/teacher/submit', [Controllers\SubjectController::class,'addTeacher']);
     Route::post('{subject}/end/submit', [Controllers\SubjectController::class,'end']);
+    Route::post('{subject}/student/{student}/end/submit', [Controllers\SubjectController::class,'studentEnd']);
 
     Route::get('{subject}/add/teacher', [Controllers\SubjectController::class,'teacher']);
     Route::get('{subject}/end', [Controllers\SubjectController::class,'preEnd']);
+    Route::get('{subject}/student/{student}/end', [Controllers\SubjectController::class,'preStudentEnd']);
 
 });
 Route::resource('/subjects', Controllers\SubjectController::class);

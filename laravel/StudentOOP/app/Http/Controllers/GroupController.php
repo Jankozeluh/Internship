@@ -146,10 +146,10 @@ class GroupController extends Controller
             foreach ($group->subjects as $subject) {
                 foreach ($group->students as $student) {
                     if ($student->id == $request->student) {
-                        if (($subject->prereq) != null) {
+                        if ($subject->prereq != null) {
                             foreach ($subject->prereq as $prereq) {
-                                if ($student->passed != null) {
-                                    foreach ($student->passed as $passed) {
+                                if ($student->passed_subjects != null) {
+                                    foreach ($student->passed_subjects as $passed) {
                                         if ($prereq->prereq == $passed->subject_id) {
                                             $p11 = true;
                                             Student::find($student->id)->subjects()->attach($subject->id);

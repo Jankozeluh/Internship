@@ -63,7 +63,7 @@
                             <td>
                                 @foreach($sub->prereq as $item)
 {{--                                    {{ddd($item)}}--}}
-                                    {{$item->pivot->title}},
+                                    {{$item->name}},
                                 @endforeach
                             </td>
 

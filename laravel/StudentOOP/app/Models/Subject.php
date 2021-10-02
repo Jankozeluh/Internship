@@ -41,6 +41,6 @@ class Subject extends Model
     }
 
     public function prereq(){
-        return $this->belongsToMany(Subject::class,'prerequisites','owner','prereq')->withPivot(['title']);
+        return $this->belongsToMany(Subject::class,'prerequisites','owner','prereq');//->withPivot(['title']);
     }
 }

@@ -1,6 +1,18 @@
 @extends('layouts.master')
 @section('title','Home')
 @section('content')
+    <div>
+        <div style="text-align: center">
+            <form method="GET" id="semester" >
+            <label for="fff">Semester filter</label><br>
+                <select name="filter" id="fff" onchange="filtt()">
+                    <option value="off">OFF</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </form>
+        </div>
+    </div>
 
     <div class="container">
             <div class="row">
@@ -193,4 +205,9 @@
             </div>
         </div>
     </div>
+    <script>
+        function filtt() {
+            document.getElementById('semester').submit();
+        }
+    </script>
 @endsection

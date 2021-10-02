@@ -59,7 +59,7 @@ class SubjectController extends Controller
         $subjects = $request->input('subject');
         if ($subjects != null) {
             foreach ($subjects as $subject) {
-                $id->prereq()->attach($subject,['title'=>Subject::find($subject)->name]);
+                $id->prereq()->attach($subject);
                 //DB::table('prerequisites')->where('id','=',$subject)->a;
             }
         }
@@ -184,11 +184,40 @@ class SubjectController extends Controller
         foreach ($subject->students as $ssubject) {
             $id = $ssubject->id;
             if ($request[$id] >= 1 && $request[$id] <= 4) {
-                Student::find($id)->increment('credits',$subject->credits);
+                Student::find($id)->increment('credits', $subject->credits);
                 Student::find($id)->passed_subjects()->attach($subject->id);
             }
         }
         Subject::find($subject->id)->delete();
+        return redirect('/subjects');
+    }
+
+    /**
+     * Show avaiable teachers for the subject.
+     *
+     * @param \App\Models\Subject $subject
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function preStudentEnd(Subject $subject,Student $student)
+    {
+        return view('subjects.studentEnd')->with('subject', Subject::find($subject->id))->with('student', Student::find($student->id));
+    }
+
+    /**
+     *
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Subject $subject
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public function studentEnd(Request $request, Subject $subject, Student $student)
+    {
+        $id = $student->id;
+        if ($request[$id] >= 1 && $request[$id] <= 4) {
+            Student::find($id)->increment('credits', $subject->credits);
+            Student::find($id)->passed_subjects()->attach($subject->id);
+        }
+        $student->subjects()->detach($subject->id);
         return redirect('/subjects');
     }
 }
