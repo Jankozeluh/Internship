@@ -7,6 +7,7 @@ use App\Models\Group;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -141,39 +142,37 @@ class GroupController extends Controller
      */
     public function addStudent(Request $request, Group $group)
     {
-        try {
-            Group::find($group->id)->students()->attach($request->student);
-            foreach ($group->subjects as $subject) {
-                foreach ($group->students as $student) {
-                    if ($student->id == $request->student) {
-                        if ($subject->prereq != null) {
+        Group::find($group->id)->students()->attach($request->student);
+        foreach ($group->subjects as $subject) {
+            foreach ($group->students as $student) {
+                if ($student->id == (int)$request->student) {
+                    if ($subject->prereq != null) {
+                        if (sizeof($subject->prereq) != 0) {
                             foreach ($subject->prereq as $prereq) {
-                                if ($student->passed_subjects != null) {
+                                if (!(empty($student->passed_subjects))) {
                                     foreach ($student->passed_subjects as $passed) {
-                                        if ($prereq->prereq == $passed->subject_id) {
-                                            $p11 = true;
+                                        if ($prereq->id == $passed->id) {
+                                            $p = true;
                                             Student::find($student->id)->subjects()->attach($subject->id);
                                         }
                                     }
-                                    if(!(isset($p11))){
-                                        throw new \Exception("Student did not finish needed prerequisites of subjects which has the group he wants to enroll.");
+                                    if (!(isset($p))) {
+                                        Group::find($group->id)->students()->detach($request->student);
+                                        return redirect('/groups')->withErrors(['error' => 'Student did not finish needed prerequisites of subjects which has the group he wants to enroll.']);
                                     }
                                 } else {
                                     Group::find($group->id)->students()->detach($request->student);
-                                    throw new \Exception("Student did not finish any subjects, so it cannot have passed prerequisites of the subject");
+                                    return redirect('/groups')->withErrors(['error' => 'Student did not finish any subjects, so it cannot have passed prerequisites of the subject']);
                                 }
                             }
                         } else {
-                            Student::find($student->id)->subjects()->attach($subject->id);
+                            Student::find($request->student)->subjects()->attach($subject->id);
                         }
                     } else {
-                        Group::find($group->id)->students()->detach($request->student);
-                        throw new \Exception("Request was probably modified, this student is not in database.");
+                        Student::find($request->student)->subjects()->attach($subject->id);
                     }
                 }
             }
-        } catch (\Exception $e) {
-            return redirect('/groups')->withErrors(json_encode($e));
         }
         return redirect('/groups');
     }
