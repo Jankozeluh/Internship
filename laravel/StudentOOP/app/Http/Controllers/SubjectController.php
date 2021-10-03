@@ -123,9 +123,9 @@ class SubjectController extends Controller
      * @param \App\Models\Subject $subject
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(InsertSubjectRequest $request, Subject $subject)
+    public function update(Request $request, Subject $subject)
     {
-        $request->validated();
+        //$request->validated();
         Subject::where('id', $subject->id)->update([
             'name' => $request->input('name'),
             'credits' => $request->input('credits'),
