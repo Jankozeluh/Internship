@@ -166,20 +166,15 @@ class GroupController extends Controller
                             }
                             if (sizeof($p) == sizeof($subject->prereq)) {
                                 $rr[] = $subject->id;
-                                //Student::find($student->id)->subjects()->attach($subject->id);
-                                //return redirect('/groups')->withErrors(['error' => 'Student did not finish needed prerequisites of subjects which has the group he wants to enroll.']);
                             } else {
-                                //ddd($p);
                                 Group::find($group->id)->students()->detach($request->student);
                                 return redirect('/groups')->withErrors(['error' => 'Student did not finish needed prerequisites of subjects which has the group he wants to enroll.']);
                             }
                         } else {
                             $rr[] = $subject->id;
-                            //Student::find($request->student)->subjects()->attach($subject->id);
                         }
                     } else {
                         $rr[] = $subject->id;
-                        //Student::find($request->student)->subjects()->attach($subject->id);
                     }
                 }
             }
@@ -189,10 +184,9 @@ class GroupController extends Controller
                 Student::find($request->student)->subjects()->attach($sub);
             }
             return redirect('/groups');
-        }else{
+        } else {
             return redirect('/groups')->withErrors(['error' => 'Student did not finish needed prerequisites of subjects which has the group he wants to enroll, but only some of them.']);
         }
-        //return redirect('/groups');
     }
 
     /**
@@ -218,40 +212,68 @@ class GroupController extends Controller
      */
     public function addSubject(Request $request, Group $group)
     {
-        $rr = Subject::find($request->subject)->prereq;
 
-        if (sizeof($group->subjects) > 0) {
-            //ddd($group->subjects);
-            if (sizeof($group->students) > 0) {
-                foreach ($group->students as $student) {
-                    foreach ($student->subjects as $sub) {
-                        if ($sub->id != $request->subject) {
-                            if (sizeof($rr) > 0) {
-                                foreach ($rr as $prereq) {
-                                    foreach ($student->passed_subjects as $passed) {
-                                        $ps = array();
-                                        if ($passed->id == $prereq->id) {
-                                            $ps . array_push($prereq->id);
-                                            ddd($ps);
-                                            //Student::find($student->id)->subjects()->attach($request->subject);
-                                            break;
-                                        }
-                                    }
+        $rr = Subject::find($request->subject)->prereq;
+        $aa = array();
+
+        //if (sizeof($group->subjects) >= 0) {
+        //ddd($group->subjects);
+        if (sizeof($group->students) > 0) {
+            foreach ($group->students as $student) {
+                //ddd($student);
+                //if (sizeof($student->subjects)>0) {
+                //foreach ($student->subjects as $sub) {
+                //if ($request->subject != $student->subjects->id) {
+                if (sizeof($rr) > 0) {
+                    $ps = array();
+                    foreach ($rr as $prereq) {
+                        if (!(empty($student->passed_subjects))) {
+                            foreach ($student->passed_subjects as $passed) {
+                                if ($passed->id == $prereq->id) {
+                                    $ps[] = $passed->id;
                                 }
+                                //ddd($passed,$prereq);
                             }
                         } else {
-                            Group::find($group->id)->subjects()->attach($request->subject);
+                            return redirect('/groups')->withErrors(['error' => 'Students did not finish any subjects, so you cannot add new subject with prerequisites.']);
                         }
                     }
+                    if (sizeof($ps) == sizeof($rr)) {
+                        $aa[] = $student->id;
+                    } else {
+                        return redirect('/groups')->withErrors(['error' => 'Students in group did not finish needed prerequisites, of the subject you want to add to the group.']);
+                    }
+                } else {
+                    $aa[] = $student->id;
                 }
+//                            } else {
+//                                $aa[] = $student->id;
+//                            }
+                //}
+//                    }else{
+//                        $aa[] = $student->id;
+//                    }
             }
         } else {
             Group::find($group->id)->subjects()->attach($request->subject);
+            return redirect('/groups');
         }
+//        } else {
+//            if (sizeof($group->students) == 0) {
+//                Group::find($group->id)->subjects()->attach($request->subject);
+//            }
+//        }
 
-        //Group::find($group->id)->subjects()->attach($request->subject);
-
-        return redirect('/groups');
+        if (sizeof($aa) == sizeof($group->students)) {
+            Group::find($group->id)->subjects()->attach($request->subject);
+            foreach ($group->students as $st) {
+                Student::find($st->id)->subjects()->attach($request->subject);
+            }
+            return redirect('/groups');
+        } else {
+            return redirect('/groups')->withErrors(['error' => 'Not all students did finish all prerequisites of subject which you want to add to the group, but only some of them.']);
+        }
+//return redirect('/groups');
     }
 
 

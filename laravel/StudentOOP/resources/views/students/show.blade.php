@@ -17,6 +17,7 @@
                     <tr>
                         <th scope="row"><a href="/groups/">Group</a></th>
                         <th><a href="/subjects/">Subjects</a></th>
+                        <th><a href="/subjects/">Completed subjects</a></th>
                     </tr>
                 </thead>
                 @foreach($student->groups as $item)
@@ -24,6 +25,11 @@
                         <td><a href="/groups/{{$item->id}}">{{$item->code}}</a></td>
                         <td>
                             @foreach($student->subjects as $item)
+                                <a href="/subjects/{{$item->id}}">{{$item->name}}</a> ,
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($student->passed_subjects as $item)
                                 <a href="/subjects/{{$item->id}}">{{$item->name}}</a> ,
                             @endforeach
                         </td>
