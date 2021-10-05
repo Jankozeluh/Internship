@@ -6,8 +6,6 @@ use App\Http\Requests\InsertGroupRequest;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\Subject;
-use App\Models\Teacher;
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,7 +13,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
@@ -153,7 +150,7 @@ class GroupController extends Controller
                         if (sizeof($subject->prereq) > 0) {
                             $p = array();
                             foreach ($subject->prereq as $prereq) {
-                                if (!(empty($student->passed_subjects))) {
+                                if (sizeof($student->passed_subjects) > 0) {
                                     foreach ($student->passed_subjects as $passed) {
                                         if ($prereq->id == $passed->id) {
                                             $p[] = $passed->id;
@@ -212,18 +209,11 @@ class GroupController extends Controller
      */
     public function addSubject(Request $request, Group $group)
     {
-
         $rr = Subject::find($request->subject)->prereq;
         $aa = array();
 
-        //if (sizeof($group->subjects) >= 0) {
-        //ddd($group->subjects);
         if (sizeof($group->students) > 0) {
             foreach ($group->students as $student) {
-                //ddd($student);
-                //if (sizeof($student->subjects)>0) {
-                //foreach ($student->subjects as $sub) {
-                //if ($request->subject != $student->subjects->id) {
                 if (sizeof($rr) > 0) {
                     $ps = array();
                     foreach ($rr as $prereq) {
@@ -232,7 +222,6 @@ class GroupController extends Controller
                                 if ($passed->id == $prereq->id) {
                                     $ps[] = $passed->id;
                                 }
-                                //ddd($passed,$prereq);
                             }
                         } else {
                             return redirect('/groups')->withErrors(['error' => 'Students did not finish any subjects, so you cannot add new subject with prerequisites.']);
@@ -246,23 +235,11 @@ class GroupController extends Controller
                 } else {
                     $aa[] = $student->id;
                 }
-//                            } else {
-//                                $aa[] = $student->id;
-//                            }
-                //}
-//                    }else{
-//                        $aa[] = $student->id;
-//                    }
             }
         } else {
             Group::find($group->id)->subjects()->attach($request->subject);
             return redirect('/groups');
         }
-//        } else {
-//            if (sizeof($group->students) == 0) {
-//                Group::find($group->id)->subjects()->attach($request->subject);
-//            }
-//        }
 
         if (sizeof($aa) == sizeof($group->students)) {
             Group::find($group->id)->subjects()->attach($request->subject);
@@ -273,18 +250,5 @@ class GroupController extends Controller
         } else {
             return redirect('/groups')->withErrors(['error' => 'Not all students did finish all prerequisites of subject which you want to add to the group, but only some of them.']);
         }
-//return redirect('/groups');
     }
-
-
-    /*
-      stu_group
-        -group_id
-        -student_id
-
-      groups
-        -code
-        -semester
-        -students()
-    */
 }

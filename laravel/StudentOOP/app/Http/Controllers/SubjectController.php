@@ -55,12 +55,10 @@ class SubjectController extends Controller
             'semester' => (int)$request->input('semester'),
             'garant' => (int)$request->input('garant')])->first();
 
-        //ddd($id);
         $subjects = $request->input('subject');
         if ($subjects != null) {
             foreach ($subjects as $subject) {
                 $id->prereq()->attach($subject);
-                //DB::table('prerequisites')->where('id','=',$subject)->a;
             }
         }
 
@@ -180,7 +178,6 @@ class SubjectController extends Controller
      */
     public function end(Request $request, Subject $subject)
     {
-        //ddd($request[2]);
         foreach ($subject->students as $ssubject) {
             $id = $ssubject->id;
             if ($request[$id] >= 1 && $request[$id] <= 4) {
@@ -198,7 +195,7 @@ class SubjectController extends Controller
      * @param \App\Models\Subject $subject
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function preStudentEnd(Subject $subject,Student $student)
+    public function preStudentEnd(Subject $subject, Student $student)
     {
         return view('subjects.studentEnd')->with('subject', Subject::find($subject->id))->with('student', Student::find($student->id));
     }

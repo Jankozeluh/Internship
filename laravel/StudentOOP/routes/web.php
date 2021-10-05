@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers;
-use App\Http\Controllers\ExerciseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,56 +14,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('schd_inq/getTeachers/{id}',[Controllers\ScheduleController::class, 'getTeachers'])->name('getTeachers');
+Route::get('schd_inq/getTeachers/{id}', [Controllers\ScheduleController::class, 'getTeachers'])->name('getTeachers');
+Route::get('schd_inq/getSubjects/{id}', [Controllers\ScheduleController::class, 'getSubjects'])->name('getSubjects');
 
-//Route::get('exercises/getTeachers/{id}',[Controllers\ExerciseController::class, 'getTeachers'])->name('getTeachers');
-//Route::get('lectures/getTeachers/{id}',[Controllers\LectureController::class, 'getTeachers'])->name('getTeachers');
-
-Route::get('/',[Controllers\HomeController::class,'index']);
-
+Route::get('/', [Controllers\HomeController::class, 'index']);
 
 Route::prefix('students')->group(function () {
-    Route::post('{student}/leave', [Controllers\StudentController::class,'leave']);
-    Route::post('{student}/add/group/submit', [Controllers\StudentController::class,'addGroup']);
+    Route::post('{student}/leave', [Controllers\StudentController::class, 'leave']);
+    Route::post('{student}/add/group/submit', [Controllers\StudentController::class, 'addGroup']);
 
-    Route::get('{student}/add/group', [Controllers\StudentController::class,'group']);
+    Route::get('{student}/add/group', [Controllers\StudentController::class, 'group']);
 });
 Route::resource('/students', Controllers\StudentController::class);
 
 Route::prefix('subjects')->group(function () {
-    Route::post('{subject}/delete/teacher', [Controllers\SubjectController::class,'deleteTeacher']);
-    Route::post('{subject}/add/teacher/submit', [Controllers\SubjectController::class,'addTeacher']);
-    Route::post('{subject}/end/submit', [Controllers\SubjectController::class,'end']);
-    Route::post('{subject}/student/{student}/end/submit', [Controllers\SubjectController::class,'studentEnd']);
+    Route::post('{subject}/delete/teacher', [Controllers\SubjectController::class, 'deleteTeacher']);
+    Route::post('{subject}/add/teacher/submit', [Controllers\SubjectController::class, 'addTeacher']);
+    Route::post('{subject}/end/submit', [Controllers\SubjectController::class, 'end']);
+    Route::post('{subject}/student/{student}/end/submit', [Controllers\SubjectController::class, 'studentEnd']);
 
-    Route::get('{subject}/add/teacher', [Controllers\SubjectController::class,'teacher']);
-    Route::get('{subject}/end', [Controllers\SubjectController::class,'preEnd']);
-    Route::get('{subject}/student/{student}/end', [Controllers\SubjectController::class,'preStudentEnd']);
+    Route::get('{subject}/add/teacher', [Controllers\SubjectController::class, 'teacher']);
+    Route::get('{subject}/end', [Controllers\SubjectController::class, 'preEnd']);
+    Route::get('{subject}/student/{student}/end', [Controllers\SubjectController::class, 'preStudentEnd']);
 
 });
 Route::resource('/subjects', Controllers\SubjectController::class);
 
 Route::prefix('teachers')->group(function () {
-    Route::post('{teacher}/delete/subject', [Controllers\TeacherController::class,'deleteSubject']);
-    Route::post('{teacher}/add/subject/submit', [Controllers\TeacherController::class,'addSubject']);
-    Route::get('{teacher}/add/subject', [Controllers\TeacherController::class,'subject']);
+    Route::post('{teacher}/delete/subject', [Controllers\TeacherController::class, 'deleteSubject']);
+    Route::post('{teacher}/add/subject/submit', [Controllers\TeacherController::class, 'addSubject']);
+    Route::get('{teacher}/add/subject', [Controllers\TeacherController::class, 'subject']);
 });
 Route::resource('/teachers', Controllers\TeacherController::class);
 
 Route::resource('/groups', Controllers\GroupController::class);
 Route::prefix('groups')->group(function () {
-    Route::post('{group}/add/subject/submit', [Controllers\GroupController::class,'addSubject']);
-    Route::get('{group}/add/subject', [Controllers\GroupController::class,'subject']);
+    Route::post('{group}/add/subject/submit', [Controllers\GroupController::class, 'addSubject']);
+    Route::get('{group}/add/subject', [Controllers\GroupController::class, 'subject']);
 
 
-    Route::post('{group}/delete/student', [Controllers\GroupController::class,'deleteStudent']);
-    Route::post('{group}/add/student/submit', [Controllers\GroupController::class,'addStudent']);
-    Route::get('{group}/add/student', [Controllers\GroupController::class,'student']);
+    Route::post('{group}/delete/student', [Controllers\GroupController::class, 'deleteStudent']);
+    Route::post('{group}/add/student/submit', [Controllers\GroupController::class, 'addStudent']);
+    Route::get('{group}/add/student', [Controllers\GroupController::class, 'student']);
 });
-//Route::resource('/exercises', Controllers\ExerciseController::class);
-//Route::resource('/lectures', Controllers\LectureController::class);
 
-Route::resource('/schd_inq', Controllers\ScheduleController::class);
+Route::resource('/schd_inq', Controllers\ScheduleController::class)->except(['show']);
 
 
 

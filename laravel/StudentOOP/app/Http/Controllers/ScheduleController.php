@@ -57,17 +57,6 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param Schedule $schedule
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Schedule $schedule)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param Schedule $schedule
@@ -115,5 +104,10 @@ class ScheduleController extends Controller
     public function getTeachers($id)
     {
         return json_encode(Subject::find($id)->teachers);
+    }
+
+    public function getSubjects($id)
+    {
+        return json_encode(Group::find($id)->subjects);
     }
 }

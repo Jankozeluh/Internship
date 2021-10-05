@@ -25,14 +25,20 @@ class HomeController extends Controller
             case "1":
                 $subject = Subject::paginate(5)->where('semester',1);
                 $group = Group::paginate(5)->where('semester',1);
+                $lecture = Schedule::paginate(5)->whereNull('pc')->where('semester',1);
+                $exercise = Schedule::paginate(5)->whereNotNull('pc')->where('semester',1);
                 break;
             case "2":
                 $subject = Subject::paginate(5)->where('semester',2);
-                $group = Group::paginate(5)->where('semester',1);
+                $group = Group::paginate(5)->where('semester',2);
+                $lecture = Schedule::paginate(5)->whereNull('pc')->where('semester',2);
+                $exercise = Schedule::paginate(5)->whereNotNull('pc')->where('semester',2);
                 break;
             default:
                 $subject = Subject::paginate(5);
                 $group = Group::paginate(5);
+                $lecture = Schedule::paginate(5)->whereNull('pc');
+                $exercise = Schedule::paginate(5)->whereNotNull('pc');
                 break;
         }
         return view('index', [
@@ -40,8 +46,8 @@ class HomeController extends Controller
             'student' => Student::paginate(5),
             'teacher' => Teacher::paginate(5),
             'group' => $group,
-            'lecture' => Schedule::paginate(5)->whereNull('pc'),
-            'exercise' => Schedule::paginate(5)->whereNotNull('pc'),
+            'lecture' => $lecture,
+            'exercise' => $exercise,
         ]);
     }
 }

@@ -17,8 +17,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('teachers.index',[
-            'teacher'=>Teacher::sortable()->paginate(10)
+        return view('teachers.index', [
+            'teacher' => Teacher::sortable()->paginate(10)
         ]);
     }
 
@@ -35,7 +35,7 @@ class TeacherController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(InsertTeacherRequest $request)
@@ -53,12 +53,12 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param \App\Models\Teacher $teacher
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Teacher $teacher)
     {
-        return view('teachers.show')->with('teacher',Teacher::find($teacher->id));
+        return view('teachers.show')->with('teacher', Teacher::find($teacher->id));
     }
 
     /**
@@ -68,20 +68,20 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        return view('teachers.edit')->with('teacher',Teacher::find($teacher->id));
+        return view('teachers.edit')->with('teacher', Teacher::find($teacher->id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Teacher  $teacher
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Teacher $teacher
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(InsertTeacherRequest $request, Teacher $teacher)
     {
         $request->validated();
-        Teacher::where('id',$teacher->id)->update([
+        Teacher::where('id', $teacher->id)->update([
             'degree' => $request->input('degree'),
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
@@ -93,7 +93,7 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param \App\Models\Teacher $teacher
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function destroy(Teacher $teacher)
@@ -105,8 +105,8 @@ class TeacherController extends Controller
     /**
      * Delete a teacher from a teacher.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Teacher  $teacher
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Teacher $teacher
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function deleteSubject(Teacher $teacher, Request $request)
@@ -118,22 +118,26 @@ class TeacherController extends Controller
     /**
      * Show available subjects for the teacher.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param \App\Models\Teacher $teacher
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function subject(Teacher $teacher){
-        $subjects = Subject::whereDoesntHave('teachers', function ($query) use ($teacher) {$query->where('teacher_id', $teacher->id);})->get();
-        return view('teachers.add.subject')->with('teacher',Teacher::find($teacher->id))->with('subject', $subjects);
+    public function subject(Teacher $teacher)
+    {
+        $subjects = Subject::whereDoesntHave('teachers', function ($query) use ($teacher) {
+            $query->where('teacher_id', $teacher->id);
+        })->get();
+        return view('teachers.add.subject')->with('teacher', Teacher::find($teacher->id))->with('subject', $subjects);
     }
 
     /**
      * Add a subject for teacher.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Teacher  $teacher
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Teacher $teacher
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function addSubject(Request $request,Teacher $teacher){
+    public function addSubject(Request $request, Teacher $teacher)
+    {
         Teacher::find($teacher->id)->subjects()->attach((int)$request->subject);
         return redirect('/teachers');
     }

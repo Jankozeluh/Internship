@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InsertStudentRequest;
 use App\Models\Group;
 use App\Models\Student;
-use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -109,33 +108,6 @@ class StudentController extends Controller
     }
 
     /**
-     * Show selector of available subjects for the student.
-     *
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
-     */
-    public function subject(Student $student)
-    {
-        $subjects = Subject::whereDoesntHave('students', function ($query) use ($student) {
-            $query->where('student_id', $student->id);
-        })->get();
-        return view('students.add.subject')->with('student', Student::find($student->id))->with('subject', $subjects);
-    }
-
-    /**
-     * Add a subject for student.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
-     */
-    public function addSubject(Request $request, Student $student)
-    {
-        Student::find($student->id)->subjects()->attach($request->subject);
-        return redirect('/students');
-    }
-
-    /**
      * Delete a subject from a student.
      *
      * @param \Illuminate\Http\Request $request
@@ -184,13 +156,46 @@ class StudentController extends Controller
     public function addGroup(Request $request, Student $student)
     {
         Student::find($student->id)->groups()->attach($request->group);
-
+        $rr = array();
         foreach ($student->groups as $group) {
-            foreach ($group->subjects as $sub) {
-                Student::find($student->id)->subjects()->attach($sub->id);
+            if (sizeof($group->subjects) > 0) {
+                foreach ($group->subjects as $sub) {
+                    if (sizeof($sub->prereq) > 0) {
+                        if (sizeof($student->passed_subjects) > 0) {
+                            foreach ($sub->prereq as $prereq) {
+                                foreach ($student->passed_subjects as $passed) {
+                                    if ($prereq->id == $passed->id) {
+                                        $p[] = $passed->id;
+                                    }
+                                }
+                            }
+                            if (sizeof($p) == sizeof($sub->prereq)) {
+                                $rr[] = $sub->id;
+                            } else {
+                                Student::find($student->id)->groups()->detach($request->group);
+                                return redirect('/students')->withErrors(['error' => 'Student did not finish needed prerequisites of subjects which has the group he wants to enroll.']);
+                            }
+                        } else {
+                            Student::find($student->id)->groups()->detach($request->group);
+                            return redirect('/students')->withErrors(['error' => 'Student did not finish any subjects, so it cannot have passed prerequisites of the subject']);
+                        }
+                    } else {
+                        $rr[] = $sub->id;
+                    }
+                }
+            } else {
+                Student::find($student->id)->groups()->attach($request->group);
             }
         }
 
-        return redirect('/students');
+
+        if (sizeof($rr) == sizeof(Group::find($request->group)->subjects)) {
+            foreach ($rr as $subject) {
+                Student::find($student->id)->subjects()->attach($subject);
+            }
+            return redirect('/students');
+        } else {
+            return redirect('/students')->withErrors(['error' => 'Student did not finish needed prerequisites of subjects which has the group he wants to enroll, but only some of them.']);
+        }
     }
 }

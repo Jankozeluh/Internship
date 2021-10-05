@@ -5,7 +5,8 @@
         <div style="text-align: center">
             <form method="GET" id="semester" >
             <label for="fff">Semester filter</label><br>
-                <select name="filter" id="fff" onchange="filtt()">
+                <select name="filter" id="fff">
+{{--                    onchange="filtt()"--}}
                     <option value="off">OFF</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -206,8 +207,14 @@
         </div>
     </div>
     <script>
-        function filtt() {
-            document.getElementById('semester').submit();
-        }
+            $(function() {
+                $('#fff').change(function() {
+                    localStorage.setItem('filter', this.value);
+                    $('#semester').submit();
+                });
+                if(localStorage.getItem('filter')){
+                    $('#fff').val(localStorage.getItem('filter'));
+                }
+            });
     </script>
 @endsection

@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-sm" style="text-align: center;padding-top: 2%">
                     <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                        <h4><a href="/lectures">Lectures</a></h4>
+                        <h4><a href="/schd_inq">Lectures</a></h4>
                         <thead>
                         <tr>
                             <th scope="row">#</th>
@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-sm" style="text-align: center;padding-top: 2%">
                     <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                        <h4><a href="/exercises">Exercises</a></h4>
+                        <h4><a href="/schd_inq">Exercises</a></h4>
                     <thead>
                     <tr>
                         <th scope="row">#</th>
