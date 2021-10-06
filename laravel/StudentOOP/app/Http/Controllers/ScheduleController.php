@@ -57,6 +57,7 @@ class ScheduleController extends Controller
         $start2 = Carbon::createFromFormat('m-d', '2-14');
         $end2 = Carbon::createFromFormat('m-d', '5-27');
         $reqDate = Carbon::createFromFormat('Y-m-d', $request->input('date'));
+        //Error - při předání data s rokem větším než je 2021 tak si myslí, že je to špatně.
 
         if ($reqDate->gte($start1) && $reqDate->lte($end1)) {
             if ($grp->semester == 1) {
