@@ -3,6 +3,16 @@
 @section('content')
     <div class="container">
         <div class="row">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <p style="text-align: center">{{ $error }}</p>
+                            {{header("Refresh:5")}}
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-sm" style="text-align: center;padding-top: 2%">
                 <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
                     <a href="{{ url('/schd_inq') }}"><h4>Exercises</h4></a>

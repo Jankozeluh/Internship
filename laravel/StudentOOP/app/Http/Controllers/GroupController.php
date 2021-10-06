@@ -89,9 +89,9 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param InsertGroupRequest $request
      * @param Group $group
-     * @return Application|RedirectResponse|Response|Redirector
+     * @return Application|Redirector|RedirectResponse
      */
     public function update(InsertGroupRequest $request, Group $group)
     {
@@ -124,7 +124,7 @@ class GroupController extends Controller
      * Show selector of available subjects for the student.
      *
      * @param Group $group
-     * @return Application
+     * @return View
      */
     public function student(Group $group): View
     {
@@ -189,23 +189,23 @@ class GroupController extends Controller
     /**
      * Show selector of available subjects for the group.
      *
-     * @param \App\Models\Group $group
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Group $group
+     * @return Application
      */
     public function subject(Group $group)
     {
         $subject = Subject::whereDoesntHave('groups', function ($query) use ($group) {
             $query->where('group_id', $group->id);
-        })->get();
+        })->where('semester',$group->semester)->get();
         return view('groups.add.subject')->with('group', Group::find($group->id))->with('subject', $subject);
     }
 
     /**
      * Add a subject for group.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Group $group
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Group $group
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function addSubject(Request $request, Group $group)
     {

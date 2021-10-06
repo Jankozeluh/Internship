@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditScheduleInqRequest;
 use App\Http\Requests\InsertScheduleInqRequest;
-use App\Models\Exercise;
 use App\Models\Group;
-use App\Models\Lecture;
 use App\Models\Schedule;
 use App\Models\Subject;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -29,7 +34,7 @@ class ScheduleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -39,19 +44,49 @@ class ScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param InsertScheduleInqRequest $request
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function store(InsertScheduleInqRequest $request)
     {
-        Schedule::create([
-            'name' => $request->input('name'),
-            'date' => $request->input('date'),
-            'pc' => $request->input('pc'),
-            'subject_id' => $request->input('subject'),
-            'teacher_id' => $request->input('teacher'),
-            'group_id' => $request->input('group'),
-        ]);
+        $request->validated();
+
+        $grp = Group::find($request->input('group'));
+        $start1 = Carbon::createFromFormat('m-d', '9-13');
+        $end1 = Carbon::createFromFormat('m-d', '12-23');
+        $start2 = Carbon::createFromFormat('m-d', '2-14');
+        $end2 = Carbon::createFromFormat('m-d', '5-27');
+        $reqDate = Carbon::createFromFormat('Y-m-d', $request->input('date'));
+
+        if ($reqDate->gte($start1) && $reqDate->lte($end1)) {
+            if ($grp->semester == 1) {
+                $validDate = true;
+            } else {
+                return redirect('/schd_inq')->withErrors(['error' => 'Group is not available for semester you choosed date in.']);
+            }
+        } elseif ($reqDate->gte($start2) && $reqDate->lte($end2)) {
+            if ($grp->semester == 2) {
+                $validDate = true;
+            } else {
+                return redirect('/schd_inq')->withErrors(['error' => 'Group is not available for semester you choosed date in.']);
+            }
+        } else {
+            return redirect('/schd_inq')->withErrors(['error' => 'Date you choosed does not belong to any semester.']);
+        }
+
+        if (isset($validDate)) {
+            Schedule::create([
+                'name' => $request->input('name'),
+                'date' => $request->input('date'),
+                'pc' => $request->input('pc'),
+                'subject_id' => $request->input('subject'),
+                'teacher_id' => $request->input('teacher'),
+                'group_id' => $request->input('group'),
+            ]);
+        } else {
+            return redirect('/schd_inq')->withErrors(['error' => 'Something went wrong.']);
+        }
+
         return redirect('/schd_inq');
     }
 
@@ -59,40 +94,69 @@ class ScheduleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Schedule $schedule
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit($schedule)
     {
-        return view('schedule_inquiries.edit')->with('schedule', Schedule::find($schedule))->with('subject', Subject::all())->with('teacher', Teacher::all())->with('group', Group::all());
+        return view('schedule_inquiries.edit')->with('schedule', Schedule::find($schedule));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param EditScheduleInqRequest $request
      * @param Schedule $schedule
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @return Application|RedirectResponse|Response|Redirector
      */
-    public function update(InsertScheduleInqRequest $request, $schedule)
+    public function update(EditScheduleInqRequest $request, $schedule)
     {
         $request->validated();
-        $pc = Schedule::find($schedule)->pc;
-        Schedule::where('id', $schedule)->update([
-            'name' => $request->input('name'),
-            'date' => $request->input('date'),
-            'pc' => $request->input('pc'),
-            'subject_id' => $request->input('subject'),
-            'teacher_id' => $request->input('teacher'),
-            'group_id' => $request->input('group'),
-        ]);
+        $sch = Schedule::find($schedule);
+
+        $grp = $sch->group;
+        $start1 = Carbon::createFromFormat('m-d', '9-13');
+        $end1 = Carbon::createFromFormat('m-d', '12-23');
+        $start2 = Carbon::createFromFormat('m-d', '2-14');
+        $end2 = Carbon::createFromFormat('m-d', '5-27');
+        $reqDate = Carbon::createFromFormat('Y-m-d', $request->input('date'));
+
+        if ($reqDate->gte($start1) && $reqDate->lte($end1)) {
+            if ($grp->semester == 1) {
+                $validDate = true;
+            } else {
+                return redirect('/schd_inq')->withErrors(['error' => 'Group is not available for semester you choosed date in.']);
+            }
+        } elseif ($reqDate->gte($start2) && $reqDate->lte($end2)) {
+            if ($grp->semester == 2) {
+                $validDate = true;
+            } else {
+                return redirect('/schd_inq')->withErrors(['error' => 'Group is not available for semester you choosed date in.']);
+            }
+        } else {
+            return redirect('/schd_inq')->withErrors(['error' => 'Date you choosed does not belong to any semester.']);
+        }
+
+        if (isset($validDate)) {
+            Schedule::where('id', $schedule)->update([
+                'name' => $request->input('name'),
+                'date' => $request->input('date'),
+                'pc' => $request->input('pc'),
+                'subject_id' => $sch->subject->id,
+                'teacher_id' => $sch->teacher->id,
+                'group_id' => $sch->group->id,
+            ]);
+        } else {
+            return redirect('/schd_inq')->withErrors(['error' => 'Something went wrong.']);
+        }
+
+
         return redirect('/schd_inq');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @return Application|Redirector|RedirectResponse
      */
     public function destroy($schedule)
     {

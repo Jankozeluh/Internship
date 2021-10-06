@@ -6,14 +6,20 @@ use App\Http\Requests\InsertSubjectRequest;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
@@ -25,7 +31,7 @@ class SubjectController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
@@ -35,8 +41,8 @@ class SubjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function store(InsertSubjectRequest $request)
     {
@@ -66,8 +72,8 @@ class SubjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param Subject $subject
+     * @return Application|Factory|View
      */
     public function show(Subject $subject)
     {
@@ -77,8 +83,8 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Student $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param Subject $subject
+     * @return Application|Factory|View
      */
     public function edit(Subject $subject)
     {
@@ -88,8 +94,8 @@ class SubjectController extends Controller
     /**
      * Show avaiable teachers for the subject.
      *
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Subject $subject
+     * @return Application
      */
     public function teacher(Subject $subject)
     {
@@ -102,9 +108,9 @@ class SubjectController extends Controller
     /**
      * Add a teacher for subject.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Subject $subject
+     * @return Application|RedirectResponse|Redirector
      */
     public function addTeacher(Request $request, Subject $subject)
     {
@@ -115,9 +121,9 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Subject $subject
+     * @return Application|Redirector|RedirectResponse
      */
     public function update(Request $request, Subject $subject)
     {
@@ -134,8 +140,8 @@ class SubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Subject $subject
+     * @return Application|Redirector|RedirectResponse
      */
     public function destroy(Subject $subject)
     {
@@ -146,9 +152,9 @@ class SubjectController extends Controller
     /**
      * Delete a teacher from a subject.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Subject $subject
+     * @return Application|Redirector|RedirectResponse
      */
     public function deleteTeacher(Subject $subject, Request $request)
     {
@@ -159,8 +165,8 @@ class SubjectController extends Controller
     /**
      * Show avaiable teachers for the subject.
      *
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Subject $subject
+     * @return Application
      */
     public function preEnd(Subject $subject)
     {
@@ -170,9 +176,9 @@ class SubjectController extends Controller
     /**
      *
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Subject $subject
+     * @return Application|Redirector|RedirectResponse
      */
     public function end(Request $request, Subject $subject)
     {
@@ -190,8 +196,8 @@ class SubjectController extends Controller
     /**
      * Show avaiable teachers for the subject.
      *
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Subject $subject
+     * @return Application
      */
     public function preStudentEnd(Subject $subject, Student $student)
     {
@@ -201,9 +207,9 @@ class SubjectController extends Controller
     /**
      *
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Subject $subject
+     * @return Application|Redirector|RedirectResponse
      */
     public function studentEnd(Request $request, Subject $subject, Student $student)
     {

@@ -28,7 +28,10 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Semester</span>
-                        <input type="number" name="semester" class="form-control" value="{{$subject->semester}}">
+                        <select name="semester" class="form-control" required>
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                        </select>
                     </div>
                     <input type="submit" name="edit" class="btn btn-secondary" value="Edit this subject"/>
                 </form>

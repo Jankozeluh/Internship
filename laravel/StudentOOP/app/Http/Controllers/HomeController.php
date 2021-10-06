@@ -7,6 +7,9 @@ use App\Models\Schedule;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Subject;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 
@@ -16,7 +19,8 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * * Display a listing of the resource.
+     * @return Application|Factory|View
      */
     public function index(Request $request)
     {

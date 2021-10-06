@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InsertStudentRequest;
 use App\Models\Group;
 use App\Models\Student;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -24,7 +30,7 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -34,8 +40,8 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param InsertStudentRequest $request
+     * @return Application|Redirector|RedirectResponse
      */
     public function store(InsertStudentRequest $request)
     {
@@ -55,8 +61,8 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param Student $student
+     * @return Application|Factory|View
      */
     public function show(Student $student)
     {
@@ -66,8 +72,8 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param Student $student
+     * @return Application|Factory|View
      */
     public function edit(Student $student)
     {
@@ -77,9 +83,9 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param InsertStudentRequest $request
+     * @param Student $student
+     * @return Application|Redirector|RedirectResponse
      */
     public function update(InsertStudentRequest $request, Student $student)
     {
@@ -98,8 +104,8 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Student $student
+     * @return Application|Redirector|RedirectResponse
      */
     public function destroy(Student $student)
     {
@@ -110,9 +116,9 @@ class StudentController extends Controller
     /**
      * Delete a subject from a student.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Student $student
+     * @return Application|Redirector|RedirectResponse
      */
     public function deleteSubject(Student $student, Request $request)
     {
@@ -123,8 +129,8 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage when it got 80+ credits.
      *
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Student $student
+     * @return Application|Redirector|RedirectResponse
      */
     public function leave(Student $student)
     {
@@ -138,8 +144,8 @@ class StudentController extends Controller
     /**
      * Show selector of available subjects for the student.
      *
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Student $student
+     * @return Application
      */
     public function group(Student $student)
     {
@@ -149,9 +155,9 @@ class StudentController extends Controller
     /**
      * Add a subject for student.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Student $student
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Student $student
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function addGroup(Request $request, Student $student)
     {
