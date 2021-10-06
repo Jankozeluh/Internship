@@ -42,13 +42,7 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Subject</span>
-                        <select class="form-control formselect required" placeholder="Select subject" id="subject"
-                                name="subject" required>
-                            {{--                            <option disabled selected>Select subject</option>--}}
-                            {{--                            @foreach($subject as $item)--}}
-                            {{--                                <option value={{$item->id}}>{{$item->name}}</option>--}}
-                            {{--                            @endforeach--}}
-                        </select>
+                        <select class="form-control formselect required" placeholder="Select subject" id="subject" name="subject" required></select>
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Teacher</span>

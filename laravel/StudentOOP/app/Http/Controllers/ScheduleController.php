@@ -7,7 +7,6 @@ use App\Models\Exercise;
 use App\Models\Group;
 use App\Models\Lecture;
 use App\Models\Schedule;
-use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;

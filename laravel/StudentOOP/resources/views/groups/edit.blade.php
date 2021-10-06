@@ -17,7 +17,7 @@
                         <input type="number" name="semester" class="form-control" value={{$group->semester}} required>
                     </div>
                     <br>
-                    <input type="submit" name="edit" class="btn btn-secondary" value="Submit edit of group" />
+                    <input type="submit" name="edit" class="btn btn-secondary" value="Submit edit of group"/>
                 </form>
             </div>
         </div>

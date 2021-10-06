@@ -37,7 +37,7 @@
                         <span class="input-group-text">Enrollment</span>
                         <input type="date" name="enrollment" class="form-control" required>
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new student" />
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new student"/>
                 </form>
             </div>
         </div>

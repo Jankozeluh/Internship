@@ -44,14 +44,13 @@
                     <div class="input-group input-group-sm mb-3">
                         <div class="form-check form-switch" style="margin: auto">
                             @foreach($subject as $item)
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
-                                       name="subject[]" value={{$item->id}}>
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="subject[]" value={{$item->id}}>
                                 <label class="form-check-label" for="flexSwitchCheckDefault">{{$item->name}}</label>
                                 <br>
                             @endforeach
                         </div>
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new subject" />
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new subject"/>
                 </form>
             </div>
         </div>

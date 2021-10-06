@@ -11,32 +11,32 @@
         </div>
 
         <div class="row">
-        <div class="col-sm" style="text-align: center;padding-top: 2%">
-            <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
-                <thead>
+            <div class="col-sm" style="text-align: center;padding-top: 2%">
+                <table style="border: 1px solid black;text-align: center;" class="table table-secondary table-sm">
+                    <thead>
                     <tr>
                         <th scope="row"><a href="/groups/">Group</a></th>
                         <th><a href="/subjects/">Subjects</a></th>
                         <th><a href="/subjects/">Completed subjects</a></th>
                     </tr>
-                </thead>
-                @foreach($student->groups as $item)
-                    <tr>
-                        <td><a href="/groups/{{$item->id}}">{{$item->code}}</a></td>
-                        <td>
-                            @foreach($student->subjects as $item)
-                                <a href="/subjects/{{$item->id}}">{{$item->name}}</a> ,
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach($student->passed_subjects as $item)
-                                <a href="/subjects/{{$item->id}}">{{$item->name}}</a> ,
-                            @endforeach
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
+                    </thead>
+                    @foreach($student->groups as $item)
+                        <tr>
+                            <td><a href="/groups/{{$item->id}}">{{$item->code}}</a></td>
+                            <td>
+                                @foreach($student->subjects as $item)
+                                    <a href="/subjects/{{$item->id}}">{{$item->name}}</a> ,
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($student->passed_subjects as $item)
+                                    <a href="/subjects/{{$item->id}}">{{$item->name}}</a> ,
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
-    </div>
 @endsection
 

@@ -21,18 +21,18 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $rr = $request['filter'];
-        switch ($rr){
+        switch ($rr) {
             case "1":
-                $subject = Subject::paginate(5)->where('semester',1);
-                $group = Group::paginate(5)->where('semester',1);
-                $lecture = Schedule::paginate(5)->whereNull('pc')->where('semester',1);
-                $exercise = Schedule::paginate(5)->whereNotNull('pc')->where('semester',1);
+                $subject = Subject::paginate(5)->where('semester', 1);
+                $group = Group::paginate(5)->where('semester', 1);
+                $lecture = Schedule::paginate(5)->whereNull('pc')->where('semester', 1);
+                $exercise = Schedule::paginate(5)->whereNotNull('pc')->where('semester', 1);
                 break;
             case "2":
-                $subject = Subject::paginate(5)->where('semester',2);
-                $group = Group::paginate(5)->where('semester',2);
-                $lecture = Schedule::paginate(5)->whereNull('pc')->where('semester',2);
-                $exercise = Schedule::paginate(5)->whereNotNull('pc')->where('semester',2);
+                $subject = Subject::paginate(5)->where('semester', 2);
+                $group = Group::paginate(5)->where('semester', 2);
+                $lecture = Schedule::paginate(5)->whereNull('pc')->where('semester', 2);
+                $exercise = Schedule::paginate(5)->whereNotNull('pc')->where('semester', 2);
                 break;
             default:
                 $subject = Subject::paginate(5);

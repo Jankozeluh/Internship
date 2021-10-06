@@ -24,7 +24,7 @@
                         <span class="input-group-text">Birth</span>
                         <input type="date" name="birth" class="form-control" value="{{$teacher->birth}}">
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Edit this teacher" />
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Edit this teacher"/>
                 </form>
             </div>
         </div>

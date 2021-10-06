@@ -14,8 +14,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <input type="submit" name="addGroup" class="btn btn-secondary" value="Add group to {{$student->firstName . " " . $student->lastName}}" style="margin-top: 2%" />
+                    <input type="submit" name="addGroup" class="btn btn-secondary" value="Add group to {{$student->firstName . " " . $student->lastName}}" style="margin-top: 2%"/>
                 </form>
             </div>
-    </div>
+        </div>
 @endsection

@@ -14,7 +14,7 @@
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">First name</span>
-                        <input type="text" name="firstName" class="form-control" value="{{$student->firstName}}" >
+                        <input type="text" name="firstName" class="form-control" value="{{$student->firstName}}">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Last name</span>
@@ -28,7 +28,7 @@
                         <span class="input-group-text">Enrollment</span>
                         <input type="date" name="enrollment" class="form-control" value="{{$student->enrollment}}">
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Edit this student" />
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Edit this student"/>
                 </form>
             </div>
         </div>

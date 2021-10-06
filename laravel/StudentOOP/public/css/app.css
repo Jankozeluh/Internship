@@ -1,34 +1,34 @@
-body{
+body {
     background-color: #e4e4e0;
     color: #6c757d;
 }
 
-a{
+a {
     text-decoration: blink;
     color: #000;
 }
 
-a:hover{
+a:hover {
     text-decoration: underline 2px;
     color: #6c757d;
 }
 
-.mb-3{
+.mb-3 {
     margin-bottom: 2px !important;
 }
 
-#iddButton{
+#iddButton {
     background: transparent;
     border: none !important;
-    font-size:0;
+    font-size: 0;
 }
 
-#lddButton{
+#lddButton {
     background: transparent;
     border: none !important;
 }
 
-#lddButton:hover{
+#lddButton:hover {
     text-decoration: line-through 2px;
 }
 

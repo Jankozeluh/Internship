@@ -1,4 +1,4 @@
-@extends('layouts.master')
+extends('layouts.master')
 @section('title','Create')
 @section('content')
     <div class="container" style="width: 50%">
@@ -33,7 +33,7 @@
                         <span class="input-group-text">Birth</span>
                         <input type="date" name="birth" class="form-control" required>
                     </div>
-                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new teacher" />
+                    <input type="submit" name="insert" class="btn btn-secondary" value="Submit new teacher"/>
                 </form>
             </div>
         </div>

@@ -28,9 +28,6 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
-                                {{--                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"--}}
-                                {{--                                       name="student[]" value={{$item->id}}>--}}
-                                {{--                                <label class="form-check-label" for="flexSwitchCheckDefault">{{$item->degree.$item->firstName.$item->lastName}}</label>--}}
                                 <br>
                             @endforeach
                         </div>

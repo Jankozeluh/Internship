@@ -27,28 +27,20 @@
                         <input type="date" name="date" value="{{$schedule->date}}" class="form-control" required>
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Subject</span>
-                        <select class="form-control formselect required" placeholder="Select subject" id="subject"
-                                name="subject" required>
-                            <option disabled selected>Select subject</option>
-                            @foreach($subject as $item)
-                                <option value={{$item->id}}>{{$item->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Teacher</span>
-                        <select class="form-control formselect required" placeholder="Select Teacher" id="teacher"
-                                name="teacher" required>
-                        </select>
-                    </div>
-                    <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text">Group</span>
-                        <select name="group" class="form-control" required>
+                        <select name="group" class="form-control" id="group" required>
                             @foreach($group as $item)
                                 <option value={{$item->id}}>{{$item->code}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Subject</span>
+                        <select class="form-control formselect required" placeholder="Select subject" id="subject" name="subject" required></select>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Teacher</span>
+                        <select class="form-control formselect required" placeholder="Select Teacher" id="teacher" name="teacher" required></select>
                     </div>
                     @if($schedule->pc != null)
                         <div class="input-group input-group-sm mb-3">
@@ -66,7 +58,24 @@
     </div>
 
     <script>
-        $(document).ready(function () {
+        $('#group').on('change', function () {
+            let id = $(this).val();
+            $('#subject').empty();
+            $('#teacher').empty();
+            $('#subject').append(`<option disabled selected>Processing...</option>`);
+            $.ajax({
+                type: 'GET',
+                url: '../getSubjects/' + id,
+                success: function (response) {
+                    var response = JSON.parse(response);
+                    console.log(response);
+                    $('#subject').empty();
+                    $('#subject').append(`<option value="0" disabled selected>Select subject</option>`);
+                    response.forEach(element => {
+                        $('#subject').append(`<option value="${element['id']}">${element['name']}</option>`);
+                    });
+                }
+            });
             $('#subject').on('input', function () {
                 let id = $(this).val();
                 $('#teacher').empty();

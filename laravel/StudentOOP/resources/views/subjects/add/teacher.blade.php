@@ -14,8 +14,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <input type="submit" name="addTeacher" class="btn btn-secondary" value="Add teacher to {{$subject->name}}" style="margin-top: 2%" />
+                    <input type="submit" name="addTeacher" class="btn btn-secondary" value="Add teacher to {{$subject->name}}" style="margin-top: 2%"/>
                 </form>
             </div>
-    </div>
+        </div>
 @endsection
