@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddSubjectGroupRequest;
 use App\Http\Requests\InsertGroupRequest;
 use App\Models\Group;
 use App\Models\Student;
@@ -10,7 +11,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 
@@ -135,12 +135,13 @@ class GroupController extends Controller
     /**
      * Add a subject for student.
      *
-     * @param Request $request
+     * @param AddSubjectGroupRequest $request
      * @param Group $group
      * @return Application|Redirector|RedirectResponse
      */
-    public function addStudent(Request $request, Group $group)
+    public function addStudent(AddSubjectGroupRequest $request, Group $group)
     {
+        $request->validated();
         Group::find($group->id)->students()->attach($request->student);
         $rr = array();
         foreach ($group->subjects as $subject) {
@@ -203,12 +204,14 @@ class GroupController extends Controller
     /**
      * Add a subject for group.
      *
-     * @param Request $request
+     * @param AddSubjectGroupRequest $request
      * @param Group $group
      * @return Application|RedirectResponse|Response|Redirector
      */
-    public function addSubject(Request $request, Group $group)
+    public function addSubject(AddSubjectGroupRequest $request, Group $group)
     {
+        $request->validated();
+
         $rr = Subject::find($request->subject)->prereq;
         $aa = array();
 

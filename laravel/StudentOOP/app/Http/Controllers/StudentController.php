@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddGroupStudentRequest;
 use App\Http\Requests\InsertStudentRequest;
 use App\Models\Group;
 use App\Models\Student;
@@ -155,11 +156,11 @@ class StudentController extends Controller
     /**
      * Add a subject for student.
      *
-     * @param Request $request
+     * @param AddGroupStudentRequest $request
      * @param Student $student
      * @return Application|RedirectResponse|Response|Redirector
      */
-    public function addGroup(Request $request, Student $student)
+    public function addGroup(AddGroupStudentRequest $request, Student $student)
     {
         Student::find($student->id)->groups()->attach($request->group);
         $rr = array();
